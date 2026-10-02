@@ -71,6 +71,7 @@ export const TodayScreen: FC = () => {
       {selected && (
         <Composer
           placeholder={t('day.newTaskIn')}
+          submitLabel={t('common.add')}
           inputRef={composerInput}
           onSubmit={(text) => void addTask(today, selected.id, text)}
           start={
