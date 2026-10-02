@@ -1,14 +1,13 @@
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { PagesConfig } from '@/config/pages.config';
 import { useToday } from '@/hooks/useToday';
 import { AddInlineRow } from '@/ui/AddInlineRow';
 import { EmptyState } from '@/ui/EmptyState';
+import { ScreenHeader } from '@/ui/ScreenHeader';
 
 import { useCategories } from '../categories';
 import { addTemplateItem } from './api/template.api';
@@ -26,14 +25,10 @@ export const TemplateScreen: FC = () => {
 
   return (
     <>
-      <Box component="header" sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: -1.5 }}>
-        <IconButton component={RouterLink} to={PagesConfig.SETTINGS} aria-label={t('common.back')}>
-          <ArrowBackIcon />
-        </IconButton>
-        <Typography component="h1" sx={{ fontSize: 22, fontWeight: 600 }}>
-          {t('template.title')}
-        </Typography>
-      </Box>
+      <ScreenHeader
+        title={t('template.title')}
+        back={{ to: PagesConfig.SETTINGS, label: t('common.back') }}
+      />
       <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
         {t('template.hint')}
       </Typography>
