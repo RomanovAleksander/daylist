@@ -2,7 +2,7 @@ import type { FC, ReactNode } from 'react';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
-import { theme } from './theme';
+import { theme, ThemeColorMeta } from './theme';
 
 interface Props {
   children: ReactNode;
@@ -12,6 +12,7 @@ interface Props {
 export const Providers: FC<Props> = ({ children }) => (
   <ThemeProvider theme={theme} defaultMode="dark">
     <CssBaseline />
+    <ThemeColorMeta />
     {children}
   </ThemeProvider>
 );
