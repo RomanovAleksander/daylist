@@ -1,11 +1,5 @@
-import { useTranslation } from 'react-i18next';
+import { GoalsScreen } from '@/modules/goals';
 
-import { EmptyState } from '@/ui/EmptyState';
-
-const GoalsPage = () => {
-  const { t } = useTranslation();
-
-  return <EmptyState title={t('stub.soon')} />;
-};
+const GoalsPage = () => <GoalsScreen />;
 
 export default GoalsPage;
