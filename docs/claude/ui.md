@@ -17,6 +17,7 @@ Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, 
 - After assembly with carried tasks, a one-time quiet line: `Перенесено N задачі з минулого дня`.
 - Tap on a stale badge → actions: to template / delete / keep.
 - A category with no tasks today still shows its heading and `+ задача`.
+- After the last category a muted `+ категорія` row adds a category inline (same behaviour as `+ задача`); renaming, reordering and deleting stay in settings.
 - All done: the `9 з 9` line becomes `День закрито ✓` in accent. No animation beyond that.
 - Empty state (no categories): `Додай першу категорію` with an inline input.
 

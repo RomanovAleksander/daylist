@@ -1,9 +1,12 @@
 import { useMemo, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Box } from '@mui/material';
+
 import type { Task } from '@/db';
 import { useToday } from '@/hooks/useToday';
-import { useCategories } from '@/modules/settings/categories';
+import { addCategory, useCategories } from '@/modules/settings/categories';
+import { AddInlineRow } from '@/ui/AddInlineRow';
 import { UndoSnackbar } from '@/ui/UndoSnackbar';
 
 import { addTask, deleteTask, restoreTask } from './api/tasks.api';
@@ -53,6 +56,15 @@ export const TodayScreen: FC = () => {
           onDelete={handleDelete}
         />
       ))}
+      {categories.length > 0 && (
+        <Box sx={{ mt: 3 }}>
+          <AddInlineRow
+            label={t('day.addCategory')}
+            placeholder={t('day.categoryName')}
+            onAdd={(name) => void addCategory(name)}
+          />
+        </Box>
+      )}
       <UndoSnackbar
         open={deleted !== null}
         message={t('day.deleted')}
