@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Box, Typography } from '@mui/material';
 
+import { SyncIndicator } from '@/modules/sync';
 import { ProgressRing } from '@/ui/ProgressRing';
 import { formatDayMonth, formatWeekday, type DateKey } from '@/utils/date';
 
@@ -39,9 +40,12 @@ export const DayHero: FC<Props> = ({ date, done, total, carried }) => {
         <Typography component="h1" sx={{ fontSize: 22, fontWeight: 700 }}>
           {formatWeekday(date)}
         </Typography>
-        <Typography sx={{ color: closed ? 'primary.main' : 'text.secondary', fontSize: 14 }}>
-          {closed ? t('day.closed') : formatDayMonth(date)}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography sx={{ color: closed ? 'primary.main' : 'text.secondary', fontSize: 14 }}>
+            {closed ? t('day.closed') : formatDayMonth(date)}
+          </Typography>
+          <SyncIndicator />
+        </Box>
         {carried > 0 && (
           <Typography sx={{ color: 'text.secondary', fontSize: 13, mt: 0.5 }}>
             {t('day.carriedNotice', { count: carried })}
