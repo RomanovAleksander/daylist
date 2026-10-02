@@ -1,11 +1,22 @@
 import { useTranslation } from 'react-i18next';
 
-import { EmptyState } from '@/ui/EmptyState';
+import { Typography } from '@mui/material';
+
+import { CategoriesSection } from '@/modules/settings/categories';
+import { TemplateLink } from '@/modules/settings/template';
 
 const SettingsPage = () => {
   const { t } = useTranslation();
 
-  return <EmptyState title={t('stub.soon')} />;
+  return (
+    <>
+      <Typography component="h1" sx={{ fontSize: 22, fontWeight: 600 }}>
+        {t('nav.settings')}
+      </Typography>
+      <CategoriesSection />
+      <TemplateLink />
+    </>
+  );
 };
 
 export default SettingsPage;
