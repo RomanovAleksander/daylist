@@ -202,27 +202,21 @@
     "daysWord_few": "дні",
     "daysWord_many": "днів",
     "daysWord_other": "дня",
-    "wizard": {
+    "create": {
       "title": "Нова ціль",
-      "nameQuestion": "Що хочеш досягти?",
-      "kindGoal": "Ціль",
-      "kindDream": "Мрія",
-      "dateQuestion": "До якої дати?",
+      "namePlaceholder": "Що хочеш досягти?",
+      "when": "Коли?",
       "endOfMonth": "Кінець місяця",
       "endOfYear": "Кінець року",
-      "customDate": "Свою дату",
+      "customDate": "Своя дата",
       "noDate": "Без дати",
-      "measureQuestion": "Як міряти прогрес?",
-      "measureSteps": "Кроками",
-      "measureNumber": "Сумою або числом",
-      "measureNone": "Просто відлік",
+      "dream": "✦ Мрія",
+      "measure": "Як міряти прогрес?",
+      "measureNone": "Лише час",
       "measureNoneGlobal": "Без прогресу",
-      "target": "Мета",
-      "unit": "Одиниця",
-      "next": "Далі",
-      "back": "Назад",
-      "create": "Створити",
-      "step": "Крок {{step}} з {{total}}"
+      "measureSteps": "Кроками",
+      "measureNumber": "Сумою",
+      "submit": "Створити"
     }
   }
 }
