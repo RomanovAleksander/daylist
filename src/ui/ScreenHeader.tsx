@@ -8,9 +8,11 @@ interface Props {
   title: ReactNode;
   back?: { to: string; label: string };
   action?: ReactNode;
+  /** `false`, когда вместо заголовка стоит поле ввода: div внутри h1 — невалидная разметка. */
+  heading?: boolean;
 }
 
-export const ScreenHeader: FC<Props> = ({ title, back, action }) => (
+export const ScreenHeader: FC<Props> = ({ title, back, action, heading = true }) => (
   <Box
     component="header"
     sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: back ? -1.5 : 0, mb: 1 }}
@@ -20,7 +22,10 @@ export const ScreenHeader: FC<Props> = ({ title, back, action }) => (
         <ArrowBackIcon />
       </IconButton>
     )}
-    <Typography component="h1" sx={{ fontSize: 22, fontWeight: 600, flex: 1, minWidth: 0 }}>
+    <Typography
+      component={heading ? 'h1' : 'div'}
+      sx={{ fontSize: 22, fontWeight: 600, flex: 1, minWidth: 0 }}
+    >
       {title}
     </Typography>
     {action}
