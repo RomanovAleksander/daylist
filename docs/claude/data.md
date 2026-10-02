@@ -54,3 +54,4 @@ Tombstones the category, its template items and its tasks of today. Tasks of pas
 ## Known pitfalls
 
 - Dexie's optimistic `liveQuery` cache is disabled (`cache: 'disabled'`): it dropped rows written by another transaction from cached `where()` results. Do not re-enable it without an end-to-end check of the today screen.
+- Changing the day start hour late at night can make "today" move back to a date before the latest built day; that date is then assembled as a fresh day without carry-over. Accepted: the setting is changed rarely.

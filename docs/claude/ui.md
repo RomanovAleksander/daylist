@@ -20,6 +20,10 @@ Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, 
 - All done: the `9 з 9` line becomes `День закрито ✓` in accent. No animation beyond that.
 - Empty state (no categories): `Додай першу категорію` with an inline input.
 
+## Loading
+
+Only the today screen is in the entry chunk; history, stats (with `@mui/x-charts`), settings and template are lazy routes.
+
 ## Navigation
 
 Bottom navigation with four tabs: Сьогодні / Історія / Статистика / Налаштування. The template editor opens from settings as a nested screen (bottom nav stays).
@@ -28,7 +32,7 @@ Bottom navigation with four tabs: Сьогодні / Історія / Стати
 
 - **History** — feed of past days, newest first, loading backwards on scroll; each day shows `7/9 · 78%` and expands into `DayView` (read-only, retroactive tick allowed).
 - **Stats** — today `X/Y`; week bars (`@mui/x-charts`) with days ≥ 80% in accent; per category "closed fully N of M days" for week/month; streak of days ≥ 80% (a missed day is assembled with everything undone, so it breaks the streak); stale tasks list.
-- **Settings** — one scrolling screen: categories (rename inline, reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme, day start hour), data (export/import JSON).
+- **Settings** — one scrolling screen: categories (rename inline, reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, day start hour 00:00–06:00), data (export/import JSON).
 
 ## Out of scope
 
