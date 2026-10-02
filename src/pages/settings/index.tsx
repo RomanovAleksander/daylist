@@ -4,6 +4,7 @@ import { Typography } from '@mui/material';
 
 import { CategoriesSection } from '@/modules/settings/categories';
 import { TemplateLink } from '@/modules/settings/template';
+import { DropboxSection } from '@/modules/sync';
 
 const SettingsPage = () => {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ const SettingsPage = () => {
       </Typography>
       <CategoriesSection />
       <TemplateLink />
+      <DropboxSection />
     </>
   );
 };
