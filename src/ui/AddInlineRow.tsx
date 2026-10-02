@@ -1,35 +1,36 @@
 import { useState, type FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Box, ButtonBase } from '@mui/material';
 
-import { InlineInput } from '@/ui/InlineInput';
+import { InlineInput } from './InlineInput';
 
 interface Props {
+  label: string;
+  placeholder: string;
   onAdd: (text: string) => void;
+  indent?: number;
 }
 
-export const AddTaskInput: FC<Props> = ({ onAdd }) => {
+/** Строка «+ …», которая превращается в поле: Enter добавляет и оставляет поле для следующей. */
+export const AddInlineRow: FC<Props> = ({ label, placeholder, onAdd, indent = 0 }) => {
   const [open, setOpen] = useState(false);
-
-  const { t } = useTranslation();
 
   if (!open) {
     return (
       <ButtonBase
         onClick={() => setOpen(true)}
-        sx={{ color: 'text.secondary', py: 1.25, pl: 4.25, fontSize: 15 }}
+        sx={{ color: 'text.secondary', py: 1.25, pl: indent, fontSize: 15 }}
       >
-        {t('day.addTask')}
+        {label}
       </ButtonBase>
     );
   }
 
   return (
-    <Box sx={{ pl: 4.25, py: 0.75 }}>
+    <Box sx={{ pl: indent, py: 0.75 }}>
       <InlineInput
-        placeholder={t('day.newTask')}
-        ariaLabel={t('day.newTask')}
+        placeholder={placeholder}
+        ariaLabel={placeholder}
         onSubmit={(text) => {
           onAdd(text);
           return true;

@@ -1,10 +1,11 @@
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Typography } from '@mui/material';
 
 import type { Task } from '@/db';
+import { AddInlineRow } from '@/ui/AddInlineRow';
 
-import { AddTaskInput } from './AddTaskInput';
 import { TaskRow } from './TaskRow';
 import type { CategoryGroup } from '../utils/groupTasks';
 
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export const CategoryBlock: FC<Props> = ({ group, onAdd, onDelete }) => {
+  const { t } = useTranslation();
+
   const { category, tasks, doneCount } = group;
 
   return (
@@ -41,7 +44,12 @@ export const CategoryBlock: FC<Props> = ({ group, onAdd, onDelete }) => {
       {tasks.map((task) => (
         <TaskRow key={task.id} task={task} onDelete={onDelete} />
       ))}
-      <AddTaskInput onAdd={(text) => onAdd(category.id, text)} />
+      <AddInlineRow
+        label={t('day.addTask')}
+        placeholder={t('day.newTask')}
+        indent={4.25}
+        onAdd={(text) => onAdd(category.id, text)}
+      />
     </Box>
   );
 };
