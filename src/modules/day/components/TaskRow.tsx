@@ -11,17 +11,24 @@ import { setTaskDone } from '../api/tasks.api';
 
 interface Props {
   task: Task;
+  /** Строка прямо на фоне экрана (вид «список»), а не внутри карточки. */
+  flat?: boolean;
   onOpen: (task: Task) => void;
   onDelete: (task: Task) => void;
 }
 
-export const TaskRow: FC<Props> = ({ task, onOpen, onDelete }) => {
+export const TaskRow: FC<Props> = ({ task, flat, onOpen, onDelete }) => {
   const { t } = useTranslation();
 
   return (
     <SwipeRow actionLabel={t('day.swipeDelete')} onSwipe={() => onDelete(task)}>
       <Box
-        sx={{ display: 'flex', alignItems: 'flex-start', gap: 0.5, bgcolor: 'background.paper' }}
+        sx={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 0.5,
+          bgcolor: flat ? 'background.default' : 'background.paper',
+        }}
       >
         <Checkbox
           checked={task.done}

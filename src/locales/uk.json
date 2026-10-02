@@ -34,7 +34,8 @@
     "toInbox": "Перенести у Вхідні",
     "otherCategory": "Інша категорія",
     "expand": "Показати задачі",
-    "collapse": "Сховати задачі"
+    "collapse": "Сховати задачі",
+    "progressLine": "{{done}} з {{total}} · {{percent}}%"
   },
   "common": {
     "add": "Додати",
@@ -73,6 +74,9 @@
     "themeDark": "Темна",
     "themeLight": "Світла",
     "themeSystem": "Системна",
+    "todayLayout": "Вигляд «Сьогодні»",
+    "layoutCards": "Картки",
+    "layoutList": "Список",
     "dayStart": "Новий день починається о",
     "dayStartHint": "Відмітки до цієї години йдуть у попередній день.",
     "data": "Дані",
