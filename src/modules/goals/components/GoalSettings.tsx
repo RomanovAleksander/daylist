@@ -42,17 +42,27 @@ export const GoalSettings: FC<Props> = ({ goal }) => {
       </ToggleButtonGroup>
 
       {goal.kind === 'dated' && (
-        <BlurTextField
-          key={`deadline-${goal.deadline}`}
-          type="date"
-          label={t('goals.card.deadline')}
-          value={goal.deadline ?? ''}
-          onCommit={(deadline) => void updateGoal(goal.id, { deadline: deadline || undefined })}
-          size="small"
-          fullWidth
-          slotProps={{ inputLabel: { shrink: true } }}
-          sx={{ mt: 2 }}
-        />
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, mt: 2 }}>
+          <BlurTextField
+            key={`start-${goal.startDate}`}
+            type="date"
+            label={t('goals.card.start')}
+            value={goal.startDate}
+            // Старт обязателен: без него не из чего считать прошедшее время.
+            onCommit={(startDate) => startDate && void updateGoal(goal.id, { startDate })}
+            size="small"
+            slotProps={{ inputLabel: { shrink: true }, htmlInput: { max: goal.deadline } }}
+          />
+          <BlurTextField
+            key={`deadline-${goal.deadline}`}
+            type="date"
+            label={t('goals.card.deadline')}
+            value={goal.deadline ?? ''}
+            onCommit={(deadline) => void updateGoal(goal.id, { deadline: deadline || undefined })}
+            size="small"
+            slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: goal.startDate } }}
+          />
+        </Box>
       )}
 
       {goal.kind !== 'dream' && (

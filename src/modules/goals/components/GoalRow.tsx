@@ -2,12 +2,13 @@ import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Box, ButtonBase, LinearProgress, Typography } from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 
 import { goalPath } from '@/config/pages.config';
 import type { Goal, GoalStep } from '@/db';
 import type { DateKey } from '@/utils/date';
 
+import { GoalBar } from './GoalBar';
 import { formatDeadline } from '../utils/format';
 import {
   daysLeft,
@@ -24,7 +25,7 @@ interface Props {
   today: DateKey;
 }
 
-/** Строка цели: название и дни до дедлайна, под ними что дальше и тонкая полоса прогресса. */
+/** Строка цели: название и дни до дедлайна, под ними что дальше, полоса прогресса и полоса времени. */
 export const GoalRow: FC<Props> = ({ goal, steps, today }) => {
   const { t } = useTranslation();
 
@@ -33,11 +34,9 @@ export const GoalRow: FC<Props> = ({ goal, steps, today }) => {
   const overdue = isOverdue(goal, today);
   const next = nextStep(steps);
 
-  // Без меры прогресса полоса показывает прошедшее время — серым, чтобы не путать с прогрессом.
   const time =
     goal.kind === 'dated' && goal.deadline ? timeRatio(goal.startDate, goal.deadline, today) : null;
   const measured = progress !== null && (progress.kind !== 'steps' || progress.total > 0);
-  const bar = measured ? progress.ratio : time;
 
   const subtitle = () => {
     if (progress?.kind === 'number') {
@@ -95,22 +94,32 @@ export const GoalRow: FC<Props> = ({ goal, steps, today }) => {
       >
         {subtitle()}
       </Typography>
-      {bar !== null && (
-        <LinearProgress
-          variant="determinate"
-          value={Math.round(bar * 100)}
-          aria-label={t('goals.ringLabel', { title: goal.title })}
-          sx={{
-            mt: 1,
-            height: 6,
-            borderRadius: 3,
-            bgcolor: 'divider',
-            '& .MuiLinearProgress-bar': {
-              borderRadius: 3,
-              bgcolor: measured ? 'primary.main' : 'text.disabled',
-            },
-          }}
-        />
+      {measured && (
+        <Box sx={{ mt: 1 }}>
+          <GoalBar
+            ratio={progress.ratio}
+            tone="progress"
+            label={t('goals.ringLabel', { title: goal.title })}
+          />
+        </Box>
+      )}
+      {time !== null && (
+        <Box sx={{ mt: 1 }}>
+          <GoalBar ratio={time} tone="time" height={4} label={t('goals.timeLabel')} />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              mt: 0.5,
+              fontSize: 12,
+              color: 'text.disabled',
+              fontVariantNumeric: 'tabular-nums',
+            }}
+          >
+            <span>{t('goals.time')}</span>
+            <span>{t('goals.ringPercent', { percent: Math.round(time * 100) })}</span>
+          </Box>
+        </Box>
       )}
     </ButtonBase>
   );
