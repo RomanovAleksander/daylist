@@ -13,7 +13,7 @@ interface Props {
   onDelete: (task: Task) => void;
 }
 
-/** Задачи одной категории; порядок меняется долгим нажатием, выполненные всё равно внизу. */
+/** Задачи одной категории; порядок меняется только долгим нажатием. */
 export const TaskList: FC<Props> = ({ tasks, flat, onOpenTask, onDelete }) => (
   <SortableList ids={tasks.map((task) => task.id)} onReorder={(ids) => void reorderTasks(ids)}>
     {tasks.map((task) => (

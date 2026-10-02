@@ -6,9 +6,8 @@ export interface CategoryGroup {
   doneCount: number;
 }
 
-/** Невыполненные — по порядку добавления, выполненные опускаются вниз своего блока. */
-const compareTasks = (a: Task, b: Task) =>
-  Number(a.done) - Number(b.done) || a.order - b.order || a.id.localeCompare(b.id);
+// Отметка не двигает задачу: позиция меняется только перетаскиванием.
+const compareTasks = (a: Task, b: Task) => a.order - b.order || a.id.localeCompare(b.id);
 
 export const groupTasks = (categories: Category[], tasks: Task[]): CategoryGroup[] =>
   categories.map((category) => {

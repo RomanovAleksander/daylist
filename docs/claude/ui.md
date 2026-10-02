@@ -16,7 +16,7 @@ Two layouts, chosen per device in Settings → «Вигляд «Сьогодні
 - Task row: checkbox (toggles), text (tap → task sheet), carry badge `↻ N дн.` (warning colour when stale). Swipe left deletes with an undo snackbar.
 - Task sheet: editable text (saved on close and before any action), «Робити щодня» (→ template) or, for a daily task, «Більше не робити щодня» (tombstones its template item; today's task stays as a one-off), «Перенести у Вхідні», «Інша категорія», «Видалити задачу».
 - Adding: only through the bottom `Composer` above the navigation — a category chip (last choice remembered per device, menu also has «Нова категорія») and the input; Enter adds and keeps focus. No add rows inside cards.
-- Done tasks are struck through and sink to the bottom of their card. New tasks go to the end of the undone ones. A long press lifts a task to reorder it within its category; a long press on a category header moves the whole category.
+- Done tasks are struck through and stay where they are — only a drag moves a task. New tasks go to the end of their category. A long press lifts a task to reorder it within its category; a long press on a category header moves the whole category.
 - Empty state (no categories): `Додай першу категорію` with an inline input; the composer appears once a category exists.
 
 ## Reordering

@@ -20,7 +20,7 @@ const task = (id: string, categoryId: string, order: number, patch: Partial<Task
 });
 
 describe('groupTasks', () => {
-  it('keeps category order and moves done tasks to the bottom of their block', () => {
+  it('keeps category order and leaves done tasks where they were', () => {
     const groups = groupTasks(
       [category('work', 1), category('english', 2)],
       [
@@ -32,7 +32,7 @@ describe('groupTasks', () => {
     );
 
     expect(groups.map((g) => g.category.id)).toEqual(['work', 'english']);
-    expect(groups[0]?.tasks.map((t) => t.id)).toEqual(['b', 'd', 'a']);
+    expect(groups[0]?.tasks.map((t) => t.id)).toEqual(['a', 'b', 'd']);
     expect(groups[0]?.doneCount).toBe(1);
   });
 
