@@ -12,4 +12,17 @@ export const theme = createTheme({
     fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif',
   },
   shape: { borderRadius: 10 },
+  components: {
+    MuiButton: { styleOverrides: { root: { textTransform: 'none' } } },
+    // Инвертированный снекбар MUI в тёмной схеме становится белым и слепит; держим его тёмным.
+    MuiSnackbarContent: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: '#1B1E25',
+          color: '#E8EAF0',
+          ...theme.applyStyles('dark', { backgroundColor: '#2B2F3A' }),
+        }),
+      },
+    },
+  },
 });
