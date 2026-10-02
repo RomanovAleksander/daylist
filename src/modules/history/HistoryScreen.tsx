@@ -24,7 +24,8 @@ export const HistoryScreen: FC = () => {
 
   const hasMore = days?.length === limit;
 
-  // Подгружаем старые дни, когда низ списка показался на экране.
+  // Подгружаем старые дни, когда низ списка показался на экране. Наблюдатель пересоздаём после
+  // каждой страницы: если низ всё ещё виден, новый наблюдатель сразу сработает снова.
   useEffect(() => {
     const node = sentinel.current;
     if (!node || !hasMore) return;
@@ -33,7 +34,7 @@ export const HistoryScreen: FC = () => {
     });
     observer.observe(node);
     return () => observer.disconnect();
-  }, [hasMore]);
+  }, [hasMore, limit]);
 
   if (!days || !categories) return null;
 
