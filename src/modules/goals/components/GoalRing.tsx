@@ -22,7 +22,9 @@ interface Props {
 export const GoalRing: FC<Props> = ({ goal, steps, today, size, detailed }) => {
   const { t } = useTranslation();
 
-  const progress = goalProgress(goal, steps);
+  // Цель «кроками» без единого шага ещё нечем мерить: показываем время, а не «0/0».
+  const raw = goalProgress(goal, steps);
+  const progress = raw?.kind === 'steps' && raw.total === 0 ? null : raw;
   const time =
     goal.kind === 'dated' && goal.deadline ? timeRatio(goal.startDate, goal.deadline, today) : null;
   const ratio = goal.achievedAt ? 1 : (progress?.ratio ?? time ?? 0);
