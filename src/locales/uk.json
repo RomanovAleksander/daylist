@@ -33,7 +33,19 @@
     "keep": "Залишити",
     "makeRecurring": "Зробити щоденною",
     "carriedNotice_other": "Перенесено {{count}} задачі з минулого дня",
-    "addCategory": "+ категорія"
+    "addCategory": "+ категорія",
+    "ringLabel": "Виконано {{done}} з {{total}}",
+    "percent": "{{percent}}%",
+    "newTaskIn": "Нова задача",
+    "pickCategory": "Категорія для нової задачі",
+    "newCategory": "Нова категорія",
+    "taskSheet": "Задача",
+    "makeRecurringAction": "Робити щодня",
+    "toInbox": "Перенести у Вхідні",
+    "otherCategory": "Інша категорія",
+    "categoryDone": "Усе зроблено",
+    "expand": "Показати задачі",
+    "collapse": "Сховати задачі"
   },
   "common": {
     "back": "Назад",
@@ -77,7 +89,15 @@
     "export": "Експорт JSON",
     "import": "Імпорт JSON",
     "imported": "Імпортовано: оновлено записів — {{count}}",
-    "importFailed": "Не вдалося прочитати файл: це не бекап Daylist."
+    "importFailed": "Не вдалося прочитати файл: це не бекап Daylist.",
+    "categorySheet": "Категорія",
+    "newCategoryTitle": "Нова категорія",
+    "emoji": "Іконка",
+    "noEmoji": "Без іконки",
+    "create": "Створити",
+    "addTaskHere": "Додати задачу сюди",
+    "moveUp": "Вище",
+    "moveDown": "Нижче"
   },
   "sync": {
     "title": "Синхронізація",
