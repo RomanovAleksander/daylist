@@ -1,4 +1,5 @@
-import { useRef, type FC, type ReactNode } from 'react';
+import { useMemo, useRef, type FC, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   closestCenter,
@@ -27,6 +28,23 @@ interface ListProps {
 export const SortableList: FC<ListProps> = ({ ids, onReorder, children }) => {
   const endedAt = useRef(0);
 
+  const { t } = useTranslation();
+
+  // Без своих строк dnd-kit озвучивает перетаскивание по-английски и с внутренними id.
+  const accessibility = useMemo(
+    () => ({
+      screenReaderInstructions: { draggable: t('sortable.instructions') },
+      announcements: {
+        onDragStart: () => t('sortable.picked'),
+        onDragOver: () => undefined,
+        onDragEnd: ({ over }: { over: unknown }) =>
+          t(over ? 'sortable.dropped' : 'sortable.cancelled'),
+        onDragCancel: () => t('sortable.cancelled'),
+      },
+    }),
+    [t]
+  );
+
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 300, tolerance: 6 } })
@@ -42,6 +60,7 @@ export const SortableList: FC<ListProps> = ({ ids, onReorder, children }) => {
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
+      accessibility={accessibility}
       onDragEnd={handleDragEnd}
       onDragCancel={() => (endedAt.current = Date.now())}
     >
