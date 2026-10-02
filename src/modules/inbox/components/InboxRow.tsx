@@ -33,8 +33,7 @@ export const InboxRow: FC<Props> = ({ item, now, onOpen, onDelete, onToToday }) 
           display: 'flex',
           alignItems: 'flex-start',
           gap: 0.5,
-          borderBottom: 1,
-          borderColor: 'divider',
+          bgcolor: 'background.paper',
         }}
       >
         <Checkbox

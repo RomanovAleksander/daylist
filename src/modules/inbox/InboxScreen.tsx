@@ -7,6 +7,7 @@ import { ButtonBase, Collapse, Typography } from '@mui/material';
 import type { Category, InboxItem } from '@/db';
 import { useToday } from '@/hooks/useToday';
 import { useCategories } from '@/modules/settings/categories';
+import { Card } from '@/ui/Card';
 import { Composer } from '@/ui/Composer';
 import { EmptyState } from '@/ui/EmptyState';
 import { ScreenHeader } from '@/ui/ScreenHeader';
@@ -66,23 +67,28 @@ export const InboxScreen: FC = () => {
         }
       />
       {open.length === 0 && <EmptyState title={t('inbox.empty')} />}
-      {open.map((item) => (
-        <InboxRow
-          key={item.id}
-          item={item}
-          now={now}
-          onOpen={setOpened}
-          onDelete={handleDelete}
-          onToToday={setMoving}
-        />
-      ))}
+      {open.length > 0 && (
+        <Card>
+          {open.map((item) => (
+            <InboxRow
+              key={item.id}
+              item={item}
+              now={now}
+              onOpen={setOpened}
+              onDelete={handleDelete}
+              onToToday={setMoving}
+            />
+          ))}
+        </Card>
+      )}
       {done.length > 0 && (
         <>
           <ButtonBase
             onClick={() => setShowDone((value) => !value)}
             aria-expanded={showDone}
             sx={{
-              mt: 3,
+              mt: 1.5,
+              mb: 0.5,
               py: 1,
               gap: 0.5,
               color: 'text.secondary',
@@ -101,16 +107,18 @@ export const InboxScreen: FC = () => {
             />
           </ButtonBase>
           <Collapse in={showDone} unmountOnExit>
-            {done.map((item) => (
-              <InboxRow
-                key={item.id}
-                item={item}
-                now={now}
-                onOpen={setOpened}
-                onDelete={handleDelete}
-                onToToday={setMoving}
-              />
-            ))}
+            <Card>
+              {done.map((item) => (
+                <InboxRow
+                  key={item.id}
+                  item={item}
+                  now={now}
+                  onOpen={setOpened}
+                  onDelete={handleDelete}
+                  onToToday={setMoving}
+                />
+              ))}
+            </Card>
           </Collapse>
         </>
       )}
