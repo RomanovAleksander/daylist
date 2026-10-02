@@ -79,5 +79,20 @@
     "notConfigured": "Синхронізація вимкнена: у збірці немає App key Dropbox.",
     "errorHint": "Спробуй синхронізувати ще раз. Якщо не допоможе — відключи й підключи Dropbox знову.",
     "indicator": "Стан синхронізації: {{status}}"
+  },
+  "stats": {
+    "today": "Сьогодні",
+    "streak_one": "Серія: {{count}} день ≥ 80%",
+    "streak_few": "Серія: {{count}} дні ≥ 80%",
+    "streak_many": "Серія: {{count}} днів ≥ 80%",
+    "streak_other": "Серія: {{count}} дня ≥ 80%",
+    "week": "Тиждень",
+    "month": "Місяць",
+    "weekChart": "Виконання за тиждень, %",
+    "categories": "Категорії закриті повністю",
+    "closure": "{{closed}} з {{total}} дн.",
+    "noData": "Ще немає даних",
+    "stale": "Висяки",
+    "noStale": "Висяків немає"
   }
 }
