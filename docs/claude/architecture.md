@@ -18,17 +18,19 @@ pages ──▶ modules (index.ts) ──▶ ui
 
 ## Modules
 
-| Module                | Owns                                                                  |
-| --------------------- | --------------------------------------------------------------------- |
-| `layout`              | `AppShell` (single 600px column), `TopBar`, `SyncIndicator`           |
-| `day`                 | today screen, `DayView` (reused by history), day assembly, carry-over |
-| `history`             | feed of past days, lazy loading backwards                             |
-| `stats`               | pure calculations + charts, streak, stale tasks                       |
-| `sync`                | Dropbox OAuth PKCE, file transport, merge, sync engine, status store  |
-| `settings/categories` | add / rename / reorder / delete categories                            |
-| `settings/template`   | recurring tasks editor (same look as today, no checkboxes)            |
-| `settings/appearance` | theme, day start hour                                                 |
-| `settings/backup`     | JSON export / import                                                  |
+| Module                | Owns                                                                     |
+| --------------------- | ------------------------------------------------------------------------ |
+| `layout`              | `AppShell` (single 600px column), `TopBar`, `SyncIndicator`              |
+| `day`                 | today screen, `DayView` (reused by history), day assembly, carry-over    |
+| `inbox`               | undated tasks: capture field, list, move to today, done section          |
+| `goals`               | goals list (deadline / global / dreams), goal card, steps, progress math |
+| `history`             | feed of past days, lazy loading backwards                                |
+| `stats`               | pure calculations + charts, streak, stale tasks                          |
+| `sync`                | Dropbox OAuth PKCE, file transport, merge, sync engine, status store     |
+| `settings/categories` | add / rename / reorder / delete categories                               |
+| `settings/template`   | recurring tasks editor (same look as today, no checkboxes)               |
+| `settings/appearance` | theme, day start hour                                                    |
+| `settings/backup`     | JSON export / import                                                     |
 
 ## Segments inside a heavy module
 

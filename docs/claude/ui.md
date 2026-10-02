@@ -26,7 +26,20 @@ Only the today screen is in the entry chunk; history, stats (with `@mui/x-charts
 
 ## Navigation
 
-Bottom navigation with four tabs: Сьогодні / Історія / Статистика / Налаштування. The template editor opens from settings as a nested screen (bottom nav stays).
+Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / Ще. «Ще» is a menu screen with Історія, Статистика, Налаштування; those screens show a back arrow to «Ще» and keep the «Ще» tab active. The template editor and the goal card are nested screens with a back arrow.
+
+## Inbox screen
+
+- Capture field always visible at the top: Enter adds and keeps focus for the next thought. No floating button, no reminder on the today screen.
+- Rows: checkbox, text (tap → inline edit with delete and «→ Сьогодні» actions), age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`).
+- Swipe left deletes (undo snackbar), swipe right opens the category picker and moves the task to today.
+- Collapsed «Зроблено · N» at the bottom (last 30 days).
+
+## Goals screen
+
+- Sections: «З дедлайном» (cards: title, days left, progress bar, meta, time bar «минуло N% часу»), «Глобальні» (→ rows), «Мрії» (round checkbox rows), collapsed «Досягнуто · N».
+- Each section ends with an add row: the title is typed inline, everything else is set in the goal card.
+- Goal card: title, type, deadline, measure (steps / number / none), number fields with «+ додати», description «Що робити», steps checklist, achieved / delete actions.
 
 ## Other screens
 

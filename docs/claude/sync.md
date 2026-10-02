@@ -9,10 +9,12 @@
 ## File shape
 
 ```ts
-{ version: 1, categories: Category[], tasks: Task[], templateItems: TemplateItem[], days: Day[] }
+{
+  version: (2, categories, tasks, templateItems, days, inboxItems, goals, goalSteps);
+}
 ```
 
-Validated with Zod before merge. An invalid file never overwrites local data — status becomes "error".
+Validated with Zod before merge. A `version: 1` file is read as version 2 with empty inbox and goals; a client that only knows version 1 reports an error instead of overwriting newer data. An invalid file never overwrites local data — status becomes "error".
 
 ## Merge
 
