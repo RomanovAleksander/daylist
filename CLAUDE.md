@@ -69,7 +69,8 @@ src/
 | Data                              | Where                                                                              |
 | --------------------------------- | ---------------------------------------------------------------------------------- |
 | Categories, tasks, template, days | IndexedDB — read with `useLiveQuery` in `hooks/`, write via `api/` (NEVER Zustand) |
-| Theme, day start hour             | Zustand + `persist` (per device, not synced)                                       |
+| Theme mode                        | MUI `useColorScheme` (persists itself, per device)                                 |
+| Day start hour                    | Zustand + `persist` (per device, not synced)                                       |
 | Sync status                       | Zustand (`sync.store.ts`)                                                          |
 | Dropbox tokens                    | `localStorage`, per device                                                         |
 | Current screen                    | React Router                                                                       |
@@ -96,7 +97,7 @@ src/
 4. Zustand stores
 5. Data hooks (`useLiveQuery`-based domain hooks)
 
-**Zustand:** granular selectors — `useUIStore((s) => s.theme)`. Never `useUIStore()`. Build derived objects in a `useMemo` after the selector, never inside it.
+**Zustand:** granular selectors — `useUIStore((s) => s.dayStartHour)`. Never `useUIStore()`. Build derived objects in a `useMemo` after the selector, never inside it.
 
 **Formatting:** Prettier (`singleQuote`, `trailingComma: es5`, `printWidth: 100`).
 
