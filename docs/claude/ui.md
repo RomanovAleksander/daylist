@@ -14,7 +14,7 @@ Two layouts, chosen per device in Settings → «Вигляд «Сьогодні
 - Each category is a rounded card: optional emoji, name, `1/3` counter. A fully done category collapses to one line with `✓`; the arrow expands it.
 - Tap on the category name → category sheet: emoji picker, name, «Додати задачу сюди» (switches the composer to this category and focuses it), «Вище» / «Нижче», delete with confirmation.
 - Task row: checkbox (toggles), text (tap → task sheet), carry badge `↻ N дн.` (warning colour when stale). Swipe left deletes with an undo snackbar.
-- Task sheet: editable text (saved on close and before any action), «Робити щодня» (→ template), «Перенести у Вхідні», «Інша категорія», «Видалити задачу».
+- Task sheet: editable text (saved on close and before any action), «Робити щодня» (→ template) or, for a daily task, «Більше не робити щодня» (tombstones its template item; today's task stays as a one-off), «Перенести у Вхідні», «Інша категорія», «Видалити задачу».
 - Adding: only through the bottom `Composer` above the navigation — a category chip (last choice remembered per device, menu also has «Нова категорія») and the input; Enter adds and keeps focus. No add rows inside cards.
 - Done tasks are struck through and sink to the bottom of their card. New tasks go to the end of the undone ones; no drag-and-drop for tasks.
 - Empty state (no categories): `Додай першу категорію` with an inline input; the composer appears once a category exists.

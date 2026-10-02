@@ -23,6 +23,8 @@ export const taskSchema = z.object({
   done: z.boolean(),
   doneAt: z.number().optional(),
   recurring: z.boolean(),
+  /** Пункт шаблона разовой задачи, сделанной ежедневной; у собранных из шаблона он в id. */
+  templateItemId: z.string().optional(),
   carriedFrom: z.string().optional(),
   carryCount: z.number().int().min(0),
   order: z.number(),

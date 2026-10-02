@@ -5,10 +5,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
 import RepeatIcon from '@mui/icons-material/Repeat';
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import { Box, InputBase } from '@mui/material';
 
 import type { Category, Task } from '@/db';
-import { promoteTaskToTemplate } from '@/modules/settings/template';
+import { promoteTaskToTemplate, stopTaskRecurring } from '@/modules/settings/template';
 import { BottomSheet } from '@/ui/BottomSheet';
 import { SheetAction } from '@/ui/SheetAction';
 
@@ -69,7 +70,13 @@ export const TaskSheet: FC<Props> = ({ task, categories, onClose, onDelete }) =>
         </Box>
       ) : (
         <Box>
-          {!task.recurring && (
+          {task.recurring ? (
+            <SheetAction
+              icon={<RepeatOnIcon fontSize="small" />}
+              label={t('day.stopRecurringAction')}
+              onClick={() => run(() => void stopTaskRecurring(task))}
+            />
+          ) : (
             <SheetAction
               icon={<RepeatIcon fontSize="small" />}
               label={t('day.makeRecurringAction')}
