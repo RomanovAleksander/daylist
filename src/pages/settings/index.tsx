@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 
 import { AppearanceSection } from '@/modules/settings/appearance';
+import { BackupSection } from '@/modules/settings/backup';
 import { CategoriesSection } from '@/modules/settings/categories';
 import { TemplateLink } from '@/modules/settings/template';
 import { DropboxSection } from '@/modules/sync';
@@ -19,6 +20,7 @@ const SettingsPage = () => {
       <TemplateLink />
       <DropboxSection />
       <AppearanceSection />
+      <BackupSection />
     </>
   );
 };
