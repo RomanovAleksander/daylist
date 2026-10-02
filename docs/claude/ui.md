@@ -14,7 +14,7 @@ Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, 
 - Edit mode: Enter / blur saves, Esc cancels, empty text deletes; inline actions `↻` (make recurring → template) and delete (for desktop).
 - Task order inside a category: new tasks go to the end of the undone ones; no drag-and-drop for tasks.
 - Delete: swipe left on touch, delete action in edit mode on desktop; no confirmation, `UndoSnackbar` for ~5 s.
-- After assembly with carried tasks, a one-time quiet line: `Перенесено N з учора`.
+- After assembly with carried tasks, a one-time quiet line: `Перенесено N задачі з минулого дня`.
 - Tap on a stale badge → actions: to template / delete / keep.
 - A category with no tasks today still shows its heading and `+ задача`.
 - All done: the `9 з 9` line becomes `День закрито ✓` in accent. No animation beyond that.

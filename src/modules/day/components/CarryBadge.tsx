@@ -39,7 +39,7 @@ export const CarryBadge: FC<Props> = ({ task, onDelete }) => {
     <>
       <ButtonBase
         onClick={(event: MouseEvent<HTMLElement>) => setAnchor(event.currentTarget)}
-        aria-label={t('day.staleActions', { count: task.carryCount })}
+        aria-label={t('day.staleActions', { text: task.text, count: task.carryCount })}
         aria-haspopup="menu"
         sx={{ ...badgeSx, color: 'warning.main' }}
       >

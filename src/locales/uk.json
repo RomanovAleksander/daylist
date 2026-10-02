@@ -21,15 +21,15 @@
     "swipeDelete": "Видалити",
     "firstCategory": "Додай першу категорію",
     "categoryName": "Назва категорії",
-    "carriedNotice_one": "Перенесено {{count}} задачу з учора",
-    "carriedNotice_few": "Перенесено {{count}} задачі з учора",
-    "carriedNotice_many": "Перенесено {{count}} задач з учора",
+    "carriedNotice_one": "Перенесено {{count}} задачу з минулого дня",
+    "carriedNotice_few": "Перенесено {{count}} задачі з минулого дня",
+    "carriedNotice_many": "Перенесено {{count}} задач з минулого дня",
     "carryDays": "↻ {{count}} дн.",
-    "staleActions": "Задача висить {{count}} дн.",
+    "staleActions": "«{{text}}» висить {{count}} дн.",
     "toTemplate": "У шаблон",
     "keep": "Залишити",
     "makeRecurring": "Зробити щоденною",
-    "carriedNotice_other": "Перенесено {{count}} задачі з учора"
+    "carriedNotice_other": "Перенесено {{count}} задачі з минулого дня"
   },
   "common": {
     "back": "Назад",
