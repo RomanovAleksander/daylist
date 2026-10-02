@@ -19,7 +19,14 @@ export const AddInlineRow: FC<Props> = ({ label, placeholder, onAdd, indent = 0 
     return (
       <ButtonBase
         onClick={() => setOpen(true)}
-        sx={{ color: 'text.secondary', py: 1.25, pl: indent, fontSize: 15 }}
+        sx={{
+          width: '100%',
+          justifyContent: 'flex-start',
+          color: 'text.secondary',
+          py: 1.25,
+          pl: indent,
+          fontSize: 15,
+        }}
       >
         {label}
       </ButtonBase>

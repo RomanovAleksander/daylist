@@ -6,6 +6,7 @@ import { Box, ButtonBase, Checkbox, IconButton, Typography } from '@mui/material
 
 import type { GoalStep } from '@/db';
 import { AddInlineRow } from '@/ui/AddInlineRow';
+import { Card } from '@/ui/Card';
 import { InlineInput } from '@/ui/InlineInput';
 import { SettingsSection } from '@/ui/SettingsSection';
 
@@ -89,14 +90,16 @@ export const StepsList: FC<Props> = ({ goalId, steps }) => {
           : t('goals.card.stepsEmpty')
       }
     >
-      {steps.map((step) => (
-        <StepRow key={step.id} step={step} />
-      ))}
-      <AddInlineRow
-        label={t('goals.card.addStep')}
-        placeholder={t('goals.card.newStep')}
-        onAdd={(text) => void addGoalStep(goalId, text)}
-      />
+      <Card>
+        {steps.map((step) => (
+          <StepRow key={step.id} step={step} />
+        ))}
+        <AddInlineRow
+          label={t('goals.card.addStep')}
+          placeholder={t('goals.card.newStep')}
+          onAdd={(text) => void addGoalStep(goalId, text)}
+        />
+      </Card>
     </SettingsSection>
   );
 };

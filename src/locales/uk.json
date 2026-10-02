@@ -173,7 +173,7 @@
       "addAmount": "Додати до поточного",
       "description": "Що робити",
       "descriptionHint": "Коротко: що треба робити, щоб дійти до цілі",
-      "stepsTitle": "Кроки · {{done}} з {{total}}",
+      "stepsTitle": "Кроки · {{done}}/{{total}}",
       "stepsEmpty": "Кроки",
       "addStep": "+ крок",
       "newStep": "Новий крок",
