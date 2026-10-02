@@ -33,3 +33,10 @@ export const formatShortDay = (key: DateKey): string => {
   const title = dayjs(key).locale('uk').format('dd, D MMMM');
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
+
+const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+export const formatWeekday = (key: DateKey): string =>
+  capitalize(dayjs(key).locale('uk').format('dddd'));
+
+export const formatDayMonth = (key: DateKey): string => dayjs(key).locale('uk').format('D MMMM');
