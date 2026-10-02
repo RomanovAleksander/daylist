@@ -1,10 +1,10 @@
 import { useMemo, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Typography } from '@mui/material';
-
+import { PagesConfig } from '@/config/pages.config';
 import { useToday } from '@/hooks/useToday';
 import { isStale } from '@/modules/day';
+import { ScreenHeader } from '@/ui/ScreenHeader';
 import { SettingsSection } from '@/ui/SettingsSection';
 
 import { CategoryClosureList } from './components/CategoryClosureList';
@@ -34,9 +34,10 @@ export const StatsScreen: FC = () => {
 
   return (
     <>
-      <Typography component="h1" sx={{ fontSize: 22, fontWeight: 600 }}>
-        {t('nav.stats')}
-      </Typography>
+      <ScreenHeader
+        title={t('nav.stats')}
+        back={{ to: PagesConfig.MORE, label: t('common.back') }}
+      />
       <TodaySummary today={summary.today} streak={summary.streak} />
       <SettingsSection title={t('stats.week')}>
         <WeekChart dates={weekDates(today)} byDate={data.byDate} />

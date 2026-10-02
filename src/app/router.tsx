@@ -12,6 +12,18 @@ export const router = createHashRouter([
     children: [
       { path: PagesConfig.TODAY, element: <TodayPage /> },
       {
+        path: PagesConfig.INBOX,
+        lazy: async () => ({ Component: (await import('@/pages/inbox')).default }),
+      },
+      {
+        path: PagesConfig.GOALS,
+        lazy: async () => ({ Component: (await import('@/pages/goals')).default }),
+      },
+      {
+        path: PagesConfig.MORE,
+        lazy: async () => ({ Component: (await import('@/pages/more')).default }),
+      },
+      {
         path: PagesConfig.HISTORY,
         lazy: async () => ({ Component: (await import('@/pages/history')).default }),
       },
