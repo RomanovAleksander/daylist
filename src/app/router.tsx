@@ -4,7 +4,6 @@ import { PagesConfig } from '@/config/pages.config';
 import { AppShell } from '@/modules/layout';
 import HistoryPage from '@/pages/history';
 import SettingsPage from '@/pages/settings';
-import StatsPage from '@/pages/stats';
 import TemplatePage from '@/pages/template';
 import TodayPage from '@/pages/today';
 
@@ -15,7 +14,11 @@ export const router = createHashRouter([
     children: [
       { path: PagesConfig.TODAY, element: <TodayPage /> },
       { path: PagesConfig.HISTORY, element: <HistoryPage /> },
-      { path: PagesConfig.STATS, element: <StatsPage /> },
+      {
+        path: PagesConfig.STATS,
+        // Графики тянут @mui/x-charts — грузим их только при открытии статистики.
+        lazy: async () => ({ Component: (await import('@/pages/stats')).default }),
+      },
       { path: PagesConfig.SETTINGS, element: <SettingsPage /> },
       { path: PagesConfig.TEMPLATE, element: <TemplatePage /> },
       { path: '*', element: <Navigate to={PagesConfig.TODAY} replace /> },

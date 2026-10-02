@@ -1,11 +1,5 @@
-import { useTranslation } from 'react-i18next';
+import { StatsScreen } from '@/modules/stats';
 
-import { EmptyState } from '@/ui/EmptyState';
-
-const StatsPage = () => {
-  const { t } = useTranslation();
-
-  return <EmptyState title={t('stub.soon')} />;
-};
+const StatsPage = () => <StatsScreen />;
 
 export default StatsPage;
