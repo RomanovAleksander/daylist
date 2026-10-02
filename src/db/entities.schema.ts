@@ -11,6 +11,7 @@ const syncedFields = {
 export const categorySchema = z.object({
   ...syncedFields,
   name: z.string(),
+  emoji: z.string().optional(),
   order: z.number(),
 });
 

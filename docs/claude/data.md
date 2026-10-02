@@ -5,7 +5,7 @@
 All synced entities carry `id: string`, `updatedAt: number` (ms, `Date.now()`), `deleted?: true`.
 
 ```ts
-Category     { id, name, order, updatedAt, deleted? }
+Category     { id, name, emoji?, order, updatedAt, deleted? }
 Task         { id, date, categoryId, text, done, doneAt?, recurring,
                carriedFrom?, carryCount, order, updatedAt, deleted? }
 TemplateItem { id, categoryId, text, order, updatedAt, deleted? }
