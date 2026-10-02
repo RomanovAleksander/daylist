@@ -53,3 +53,8 @@ One section → `components/`; two modules → nearest common ancestor (`setting
 ## Stubs
 
 `export {}` in an `index.ts` is an architectural placeholder. Do not import from it; replace it with real exports in the same change that adds logic.
+
+## Security
+
+- The production build carries a Content-Security-Policy meta tag (`vite.config.ts`): own scripts only, network only to self and Dropbox. A new external origin (API, font, image host) must be added there — otherwise it fails silently in production while working on the dev server.
+- Never render user text as HTML (`dangerouslySetInnerHTML`, `innerHTML`): tasks, goals and imported JSON are untrusted input.
