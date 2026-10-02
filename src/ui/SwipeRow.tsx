@@ -2,16 +2,24 @@ import { useRef, useState, type FC, type PointerEvent, type ReactNode } from 're
 
 import { Box } from '@mui/material';
 
+interface SwipeAction {
+  label: string;
+  onSwipe: () => void;
+}
+
 interface Props {
   children: ReactNode;
+  /** Свайп влево — обычно удаление. */
   actionLabel: string;
   onSwipe: () => void;
+  /** Свайп вправо — необязательное второе действие. */
+  right?: SwipeAction;
 }
 
 const THRESHOLD = 80;
 
-/** Свайп влево на тач-экране; мышь и перо игнорируются — на десктопе есть кнопка удаления. */
-export const SwipeRow: FC<Props> = ({ children, actionLabel, onSwipe }) => {
+/** Свайп на тач-экране; мышь и перо игнорируются — на десктопе у тех же действий есть кнопки. */
+export const SwipeRow: FC<Props> = ({ children, actionLabel, onSwipe, right }) => {
   const start = useRef<{ x: number; y: number } | null>(null);
   const [offset, setOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -37,17 +45,21 @@ export const SwipeRow: FC<Props> = ({ children, actionLabel, onSwipe }) => {
       reset();
       return;
     }
-    setOffset(Math.min(0, dx));
+    setOffset(right ? dx : Math.min(0, dx));
   };
 
   const handleUp = () => {
     if (offset <= -THRESHOLD) onSwipe();
+    else if (right && offset >= THRESHOLD) right.onSwipe();
     reset();
   };
 
+  const showing =
+    offset < 0 ? { label: actionLabel, left: false } : { label: right?.label, left: true };
+
   return (
     <Box sx={{ position: 'relative', overflow: 'hidden' }}>
-      {offset < 0 && (
+      {offset !== 0 && (
         <Box
           aria-hidden
           sx={{
@@ -55,14 +67,14 @@ export const SwipeRow: FC<Props> = ({ children, actionLabel, onSwipe }) => {
             inset: 0,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            pr: 2,
-            bgcolor: 'error.dark',
-            color: 'error.contrastText',
+            justifyContent: showing.left ? 'flex-start' : 'flex-end',
+            px: 2,
+            bgcolor: showing.left ? 'primary.dark' : 'error.dark',
+            color: showing.left ? 'primary.contrastText' : 'error.contrastText',
             fontSize: 14,
           }}
         >
-          {actionLabel}
+          {showing.label}
         </Box>
       )}
       <Box
