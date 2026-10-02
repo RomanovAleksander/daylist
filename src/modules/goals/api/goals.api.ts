@@ -2,21 +2,23 @@ import { db, type Goal, type GoalKind } from '@/db';
 import type { DateKey } from '@/utils/date';
 import { createId } from '@/utils/id';
 
-export const addGoal = async (kind: GoalKind, title: string, today: DateKey) => {
-  const all = await db.goals.toArray();
-  const goal: Goal = {
-    id: createId(),
-    kind,
-    title,
-    description: '',
-    startDate: today,
-    measure: 'none',
-    order: Math.max(0, ...all.map((g) => g.order)) + 1,
-    updatedAt: Date.now(),
-  };
-  await db.goals.add(goal);
-  return goal.id;
-};
+/** Транзакция: см. addCategory — иначе две быстро добавленные цели получат один order. */
+export const addGoal = (kind: GoalKind, title: string, today: DateKey) =>
+  db.transaction('rw', db.goals, async () => {
+    const all = await db.goals.toArray();
+    const goal: Goal = {
+      id: createId(),
+      kind,
+      title,
+      description: '',
+      startDate: today,
+      measure: 'none',
+      order: Math.max(0, ...all.map((g) => g.order)) + 1,
+      updatedAt: Date.now(),
+    };
+    await db.goals.add(goal);
+    return goal.id;
+  });
 
 export type GoalChanges = Partial<Omit<Goal, 'id' | 'updatedAt'>>;
 
@@ -42,17 +44,18 @@ export const deleteGoal = (id: string) =>
     await db.goalSteps.where('goalId').equals(id).modify(tombstone);
   });
 
-export const addGoalStep = async (goalId: string, text: string) => {
-  const steps = await db.goalSteps.where('goalId').equals(goalId).toArray();
-  await db.goalSteps.add({
-    id: createId(),
-    goalId,
-    text,
-    done: false,
-    order: Math.max(0, ...steps.map((s) => s.order)) + 1,
-    updatedAt: Date.now(),
+export const addGoalStep = (goalId: string, text: string) =>
+  db.transaction('rw', db.goalSteps, async () => {
+    const steps = await db.goalSteps.where('goalId').equals(goalId).toArray();
+    await db.goalSteps.add({
+      id: createId(),
+      goalId,
+      text,
+      done: false,
+      order: Math.max(0, ...steps.map((s) => s.order)) + 1,
+      updatedAt: Date.now(),
+    });
   });
-};
 
 export const setGoalStepDone = (id: string, done: boolean) =>
   db.goalSteps.update(id, { done, updatedAt: Date.now() });
