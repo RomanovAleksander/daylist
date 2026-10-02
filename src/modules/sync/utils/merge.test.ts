@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { Category, Task } from '@/db';
 
 import { hasChanges, mergeSnapshots } from './merge';
-import { emptySnapshot, type Snapshot } from './snapshot.schema';
+import { emptySnapshot, snapshotSchema, type Snapshot } from './snapshot.schema';
 
 const category = (id: string, updatedAt: number, patch: Partial<Category> = {}): Category => ({
   id,
@@ -63,6 +63,16 @@ describe('mergeSnapshots', () => {
     expect(mergeSnapshots(merged, a)).toEqual(merged);
   });
 
+  it('merges inbox items and goals too', () => {
+    const inbox = { id: 'mop', text: 'Купити швабру', createdAt: 1, done: false, updatedAt: 1 };
+    const merged = mergeSnapshots(
+      snapshot({ inboxItems: [inbox] }),
+      snapshot({ inboxItems: [{ ...inbox, done: true, updatedAt: 2 }] })
+    );
+
+    expect(merged.inboxItems).toEqual([{ ...inbox, done: true, updatedAt: 2 }]);
+  });
+
   it('dedupes generated tasks built on two devices', () => {
     const id = 'tpl:2026-10-02:anki';
     const merged = mergeSnapshots(
@@ -71,6 +81,27 @@ describe('mergeSnapshots', () => {
     );
 
     expect(merged.tasks).toHaveLength(1);
+  });
+});
+
+describe('snapshotSchema', () => {
+  it('reads a version 1 file as version 2 with empty inbox and goals', () => {
+    const v1 = {
+      version: 1,
+      categories: [category('work', 1)],
+      tasks: [],
+      templateItems: [],
+      days: [],
+    };
+
+    expect(snapshotSchema.parse(v1)).toEqual({
+      ...emptySnapshot(),
+      categories: [category('work', 1)],
+    });
+  });
+
+  it('rejects unknown versions', () => {
+    expect(() => snapshotSchema.parse({ ...emptySnapshot(), version: 3 })).toThrow();
   });
 });
 
