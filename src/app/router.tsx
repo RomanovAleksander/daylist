@@ -4,11 +4,14 @@ import { PagesConfig } from '@/config/pages.config';
 import { AppShell } from '@/modules/layout';
 import TodayPage from '@/pages/today';
 
+import { LoadingScreen } from './LoadingScreen';
+
 // HashRouter: GitHub Pages не умеет отдавать index.html на произвольный путь.
 // Всё, кроме «Сегодня», грузится по требованию: утром важен быстрый старт главного экрана.
 export const router = createHashRouter([
   {
     element: <AppShell />,
+    HydrateFallback: LoadingScreen,
     children: [
       { path: PagesConfig.TODAY, element: <TodayPage /> },
       {
@@ -18,6 +21,10 @@ export const router = createHashRouter([
       {
         path: PagesConfig.GOALS,
         lazy: async () => ({ Component: (await import('@/pages/goals')).default }),
+      },
+      {
+        path: PagesConfig.GOAL,
+        lazy: async () => ({ Component: (await import('@/pages/goal')).default }),
       },
       {
         path: PagesConfig.MORE,
