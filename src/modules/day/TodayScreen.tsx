@@ -11,6 +11,7 @@ import { CategoryBlock } from './components/CategoryBlock';
 import { DayHeader } from './components/DayHeader';
 import { FirstCategory } from './components/FirstCategory';
 import { useDayTasks } from './hooks/useDayTasks';
+import { useEnsureDay } from './hooks/useEnsureDay';
 import { groupTasks } from './utils/groupTasks';
 
 export const TodayScreen: FC = () => {
@@ -19,6 +20,7 @@ export const TodayScreen: FC = () => {
   const { t } = useTranslation();
 
   const today = useToday();
+  const carried = useEnsureDay(today);
   const categories = useCategories();
   const tasks = useDayTasks(today);
 
@@ -41,7 +43,7 @@ export const TodayScreen: FC = () => {
 
   return (
     <>
-      <DayHeader date={today} done={done} total={total} />
+      <DayHeader date={today} done={done} total={total} carried={carried} />
       {categories.length === 0 && <FirstCategory />}
       {groups.map((group) => (
         <CategoryBlock

@@ -2,12 +2,15 @@ import { useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import RepeatIcon from '@mui/icons-material/Repeat';
 import { Box, Checkbox, IconButton } from '@mui/material';
 
 import type { Task } from '@/db';
+import { promoteTaskToTemplate } from '@/modules/settings/template';
 import { InlineInput } from '@/ui/InlineInput';
 import { SwipeRow } from '@/ui/SwipeRow';
 
+import { CarryBadge } from './CarryBadge';
 import { TaskText } from './TaskText';
 import { setTaskDone, updateTaskText } from '../api/tasks.api';
 
@@ -48,6 +51,19 @@ export const TaskRow: FC<Props> = ({ task, onDelete }) => {
                 onClose={() => setEditing(false)}
               />
             </Box>
+            {!task.recurring && (
+              <IconButton
+                aria-label={t('day.makeRecurring')}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => {
+                  setEditing(false);
+                  void promoteTaskToTemplate(task);
+                }}
+                sx={{ mt: 0.25 }}
+              >
+                <RepeatIcon fontSize="small" />
+              </IconButton>
+            )}
             <IconButton
               aria-label={t('day.deleteTask')}
               // mousedown срабатывает раньше blur поля — иначе поле закроется до клика.
@@ -59,7 +75,10 @@ export const TaskRow: FC<Props> = ({ task, onDelete }) => {
             </IconButton>
           </>
         ) : (
-          <TaskText task={task} onEdit={() => setEditing(true)} />
+          <>
+            <TaskText task={task} onEdit={() => setEditing(true)} />
+            {task.carryCount > 0 && <CarryBadge task={task} onDelete={onDelete} />}
+          </>
         )}
       </Box>
     </SwipeRow>
