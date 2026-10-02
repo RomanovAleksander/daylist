@@ -29,11 +29,14 @@ const mergeById = <T extends Versioned>(left: T[], right: T[]): T[] => {
 };
 
 export const mergeSnapshots = (left: Snapshot, right: Snapshot): Snapshot => ({
-  version: 1,
+  version: 2,
   categories: mergeById(left.categories, right.categories),
   tasks: mergeById(left.tasks, right.tasks),
   templateItems: mergeById(left.templateItems, right.templateItems),
   days: mergeById(left.days, right.days),
+  inboxItems: mergeById(left.inboxItems, right.inboxItems),
+  goals: mergeById(left.goals, right.goals),
+  goalSteps: mergeById(left.goalSteps, right.goalSteps),
 });
 
 /** Есть ли в `merged` что-то новее, чем в `base`, — то есть нужно ли загружать файл. */
