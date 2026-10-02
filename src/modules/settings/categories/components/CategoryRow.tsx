@@ -1,14 +1,12 @@
 import { useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { Box, ButtonBase, IconButton, Typography } from '@mui/material';
 
 import type { Category } from '@/db';
 import { InlineInput } from '@/ui/InlineInput';
+import { draggingSx, useSortableRow } from '@/ui/useSortableRow';
 
 import { renameCategory } from '../api/categories.api';
 
@@ -22,8 +20,7 @@ export const CategoryRow: FC<Props> = ({ category, onDelete }) => {
 
   const { t } = useTranslation();
 
-  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition } =
-    useSortable({ id: category.id });
+  const { setNodeRef, style, dragProps, isDragging } = useSortableRow(category.id, editing);
 
   const save = (name: string) => {
     setEditing(false);
@@ -33,24 +30,15 @@ export const CategoryRow: FC<Props> = ({ category, onDelete }) => {
   return (
     <Box
       ref={setNodeRef}
+      {...dragProps}
+      style={{ ...style, ...dragProps.style }}
       sx={{
         display: 'flex',
         alignItems: 'center',
         minHeight: 48,
-        bgcolor: 'background.default',
-        transform: CSS.Transform.toString(transform),
-        transition,
+        ...(isDragging && { ...draggingSx, px: 1 }),
       }}
     >
-      <IconButton
-        ref={setActivatorNodeRef}
-        aria-label={t('settings.dragCategory')}
-        sx={{ ml: -1.5, cursor: 'grab', touchAction: 'none', color: 'text.secondary' }}
-        {...attributes}
-        {...listeners}
-      >
-        <DragIndicatorIcon fontSize="small" />
-      </IconButton>
       {editing ? (
         <Box sx={{ flex: 1 }}>
           <InlineInput

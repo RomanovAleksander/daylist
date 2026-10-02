@@ -71,6 +71,13 @@ export const stopTaskRecurring = (task: Task) =>
     await db.tasks.update(task.id, { recurring: false, templateItemId: undefined, updatedAt: now });
   });
 
+export const reorderTemplateItems = (ids: string[]) => {
+  const updatedAt = Date.now();
+  return db.templateItems.bulkUpdate(
+    ids.map((id, index) => ({ key: id, changes: { order: index + 1, updatedAt } }))
+  );
+};
+
 export const updateTemplateItemText = (id: string, text: string) =>
   db.templateItems.update(id, { text, updatedAt: Date.now() });
 
