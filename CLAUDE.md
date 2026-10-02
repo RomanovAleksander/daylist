@@ -2,7 +2,7 @@
 
 ## Role & Project
 
-Senior frontend dev on **Daylist**, a minimalist daily to-do PWA for Android and Ubuntu: every morning the day is already assembled (template tasks + yesterday's unfinished ones), one-off tasks are added by hand, and tasks are ticked off during the day. No calendar, priorities, tags or deadlines — say no to features that drift towards a planner.
+Senior frontend dev on **Daylist**, a minimalist daily to-do PWA for Android and Ubuntu: every morning the day is already assembled (template tasks + yesterday's unfinished ones), one-off tasks are added by hand, and tasks are ticked off during the day. Next to the day live the **inbox** (undated tasks captured in one step) and **goals** (deadline goals, global goals, dreams) — their job is to get thoughts out of the head, not to plan. No calendar, priorities or tags — say no to features that drift towards a planner.
 
 Read before write, follow established patterns, type everything (no `any`), no dead code or stray `console.log`. Files >200 lines are a smell — split when responsibilities are mixed. One responsibility per hook / component / util.
 
@@ -51,7 +51,7 @@ src/
 ├── app/        # router.tsx, providers.tsx, theme/, i18n.ts
 ├── pages/      # route entries only, ≤30 lines each
 ├── modules/    # feature modules; each has index.ts (public API)
-│   ├── layout/ day/ history/ stats/ sync/   # flat modules
+│   ├── layout/ day/ inbox/ goals/ history/ stats/ sync/   # flat modules
 │   └── settings/                            # A1 area: categories/ template/ appearance/ backup/
 ├── db/         # Dexie instance, schema versions, entity Zod schemas and types
 ├── ui/         # dumb, app-generic primitives; domain logic never lands here
@@ -66,14 +66,14 @@ src/
 
 **State ownership:**
 
-| Data                              | Where                                                                              |
-| --------------------------------- | ---------------------------------------------------------------------------------- |
-| Categories, tasks, template, days | IndexedDB — read with `useLiveQuery` in `hooks/`, write via `api/` (NEVER Zustand) |
-| Theme mode                        | MUI `useColorScheme` (persists itself, per device)                                 |
-| Day start hour                    | Zustand + `persist` (per device, not synced)                                       |
-| Sync status                       | Zustand (`sync.store.ts`)                                                          |
-| Dropbox tokens                    | `localStorage`, per device                                                         |
-| Current screen                    | React Router                                                                       |
+| Data                                            | Where                                                                              |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Categories, tasks, template, days, inbox, goals | IndexedDB — read with `useLiveQuery` in `hooks/`, write via `api/` (NEVER Zustand) |
+| Theme mode                                      | MUI `useColorScheme` (persists itself, per device)                                 |
+| Day start hour                                  | Zustand + `persist` (per device, not synced)                                       |
+| Sync status                                     | Zustand (`sync.store.ts`)                                                          |
+| Dropbox tokens                                  | `localStorage`, per device                                                         |
+| Current screen                                  | React Router                                                                       |
 
 **Module shape (A1):** flat while light; segment into `api/ utils/ hooks/ components/<section>/` once heavy. `api/` = data access (Dexie, Dropbox HTTP), `utils/` = pure functions — both React-free (linted). Reuse ladder: lift on the second consumer to the nearest common ancestor; `src/ui/` takes only dumb primitives.
 
@@ -119,7 +119,7 @@ Navigate via constants only: `navigate(PagesConfig.STATS)`. `HashRouter` because
 
 ## Git
 
-- Conventional Commits, English, imperative, lower case, no trailing period, **subject only — no body, no trailers**. Scope = module (`app layout day history stats settings sync db ui pwa deps`) or none for repo-wide changes. Linted by commitlint.
+- Conventional Commits, English, imperative, lower case, no trailing period, **subject only — no body, no trailers**. Scope = module (`app layout day inbox goals history stats settings sync db ui pwa deps`) or none for repo-wide changes. Linted by commitlint.
 - One logical step per commit; every commit passes typecheck, lint and build.
 - `lefthook` runs `lint-staged` on pre-commit and `commitlint` on commit-msg — never bypass with `--no-verify`.
 

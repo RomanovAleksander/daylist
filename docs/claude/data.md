@@ -10,6 +10,11 @@ Task         { id, date, categoryId, text, done, doneAt?, recurring,
                carriedFrom?, carryCount, order, updatedAt, deleted? }
 TemplateItem { id, categoryId, text, order, updatedAt, deleted? }
 Day          { id /* = date */, date, builtAt, updatedAt }
+InboxItem    { id, text, createdAt, done, doneAt?, updatedAt, deleted? }
+Goal         { id, kind: 'dated' | 'global' | 'dream', title, description,
+               startDate, deadline?, measure: 'steps' | 'number' | 'none',
+               current?, target?, unit?, achievedAt?, order, updatedAt, deleted? }
+GoalStep     { id, goalId, text, done, order, updatedAt, deleted? }
 ```
 
 - `date` is a local `YYYY-MM-DD` string (`DateKey`), never a timestamp or UTC. All date math goes through `utils/date.ts` (dayjs).
@@ -42,6 +47,20 @@ Runs on start, on `visibilitychange`/`focus` and on the local midnight (day star
 - The source task stays undone in its day; history shows it as "→ перенесено".
 - A new template item is also added to today if today is already built; a removed one disappears from tomorrow.
 - "Stale" (висяк) = `carryCount >= 3`.
+
+## Inbox
+
+- Newest first; age shown relative to `createdAt`.
+- Moving to today creates an ordinary one-off task in the chosen category and tombstones the inbox item. If it is not done today, it carries like any task — it never returns to the inbox.
+- Done items stay in a collapsed «Зроблено» section for 30 days after `doneAt`, then are hidden (not deleted).
+
+## Goals
+
+- `dated` goals show days left to `deadline` and a time bar from `startDate` to `deadline`; `global` goals have no date; `dream` is a wish ticked when it comes true.
+- Progress is chosen per goal: `steps` (done / total), `number` (`current` / `target`, with `unit`) or `none`.
+- Goal steps are not linked to the day.
+- Past deadline and not achieved: show `−N дн.` with three actions — achieved / new date / move to global.
+- `achievedAt` moves a goal (or dream) to the collapsed «Досягнуто» section.
 
 ## Past days
 

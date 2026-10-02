@@ -6,7 +6,21 @@ export default {
     'scope-enum': [
       2,
       'always',
-      ['app', 'layout', 'day', 'history', 'stats', 'settings', 'sync', 'db', 'ui', 'pwa', 'deps'],
+      [
+        'app',
+        'layout',
+        'day',
+        'inbox',
+        'goals',
+        'history',
+        'stats',
+        'settings',
+        'sync',
+        'db',
+        'ui',
+        'pwa',
+        'deps',
+      ],
     ],
   },
 };
