@@ -23,6 +23,10 @@ export const router = createHashRouter([
         lazy: async () => ({ Component: (await import('@/pages/goals')).default }),
       },
       {
+        path: PagesConfig.GOAL_NEW,
+        lazy: async () => ({ Component: (await import('@/pages/goal-new')).default }),
+      },
+      {
         path: PagesConfig.GOAL,
         lazy: async () => ({ Component: (await import('@/pages/goal')).default }),
       },
