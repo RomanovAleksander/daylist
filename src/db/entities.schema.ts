@@ -40,3 +40,34 @@ export const daySchema = z.object({
   date: dateKey,
   builtAt: z.number(),
 });
+
+export const inboxItemSchema = z.object({
+  ...syncedFields,
+  text: z.string(),
+  createdAt: z.number(),
+  done: z.boolean(),
+  doneAt: z.number().optional(),
+});
+
+export const goalSchema = z.object({
+  ...syncedFields,
+  kind: z.enum(['dated', 'global', 'dream']),
+  title: z.string(),
+  description: z.string(),
+  startDate: dateKey,
+  deadline: dateKey.optional(),
+  measure: z.enum(['steps', 'number', 'none']),
+  current: z.number().optional(),
+  target: z.number().optional(),
+  unit: z.string().optional(),
+  achievedAt: z.number().optional(),
+  order: z.number(),
+});
+
+export const goalStepSchema = z.object({
+  ...syncedFields,
+  goalId: z.string(),
+  text: z.string(),
+  done: z.boolean(),
+  order: z.number(),
+});
