@@ -44,7 +44,7 @@ export const GoalsScreen: FC = () => {
             disableElevation
             startIcon={<AddIcon />}
             aria-label={t('goals.addAria')}
-            sx={{ borderRadius: 3, fontWeight: 700 }}
+            sx={{ fontWeight: 700 }}
           >
             {t('goals.add')}
           </Button>

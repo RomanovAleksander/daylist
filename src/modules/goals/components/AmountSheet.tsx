@@ -54,14 +54,7 @@ export const AmountSheet: FC<Props> = ({ goal, onClose }) => {
             fontWeight: 700,
           }}
         />
-        <Button
-          type="submit"
-          variant="contained"
-          disableElevation
-          size="large"
-          disabled={!value}
-          sx={{ borderRadius: 3.5, fontWeight: 700 }}
-        >
+        <Button type="submit" variant="contained" disableElevation size="large" disabled={!value}>
           {t('goals.card.add')}
         </Button>
       </Box>
