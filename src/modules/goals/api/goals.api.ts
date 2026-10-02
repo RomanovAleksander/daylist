@@ -1,6 +1,7 @@
 import { db, type Goal, type GoalKind } from '@/db';
 import type { DateKey } from '@/utils/date';
 import { createId } from '@/utils/id';
+import { reorderKeys } from '@/utils/order';
 
 export type GoalChanges = Partial<Omit<Goal, 'id' | 'updatedAt'>>;
 
@@ -63,6 +64,22 @@ export const setGoalStepDone = (id: string, done: boolean) =>
 
 export const updateGoalStepText = (id: string, text: string) =>
   db.goalSteps.update(id, { text, updatedAt: Date.now() });
+
+/** Активные цели и мечты — отдельные списки: каждый переставляет только свои ключи. */
+export const reorderGoals = (goals: Goal[], ids: string[]) => {
+  const keys = reorderKeys(ids, new Map(goals.map((goal) => [goal.id, goal.order])));
+  const updatedAt = Date.now();
+  return db.goals.bulkUpdate(
+    [...keys].map(([id, order]) => ({ key: id, changes: { order, updatedAt } }))
+  );
+};
+
+export const reorderGoalSteps = (ids: string[]) => {
+  const updatedAt = Date.now();
+  return db.goalSteps.bulkUpdate(
+    ids.map((id, index) => ({ key: id, changes: { order: index + 1, updatedAt } }))
+  );
+};
 
 export const deleteGoalStep = (id: string) =>
   db.goalSteps.update(id, { deleted: true, updatedAt: Date.now() });

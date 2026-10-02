@@ -7,6 +7,9 @@ import { ButtonBase, Typography } from '@mui/material';
 import { goalPath } from '@/config/pages.config';
 import type { Goal } from '@/db';
 import { Card } from '@/ui/Card';
+import { SortableItem, SortableList } from '@/ui/SortableList';
+
+import { reorderGoals } from '../api/goals.api';
 
 interface Props {
   dreams: Goal[];
@@ -33,22 +36,28 @@ export const DreamsSection: FC<Props> = ({ dreams }) => {
         {t('goals.dreams')}
       </Typography>
       <Card>
-        {dreams.map((dream) => (
-          <ButtonBase
-            key={dream.id}
-            component={RouterLink}
-            to={goalPath(dream.id)}
-            aria-label={t('goals.open', { title: dream.title })}
-            sx={{ width: '100%', justifyContent: 'flex-start', gap: 1.5, py: 1.5 }}
-          >
-            <Typography component="span" aria-hidden sx={{ color: 'primary.main' }}>
-              ✦
-            </Typography>
-            <Typography component="span" sx={{ overflowWrap: 'anywhere', textAlign: 'left' }}>
-              {dream.title}
-            </Typography>
-          </ButtonBase>
-        ))}
+        <SortableList
+          ids={dreams.map((dream) => dream.id)}
+          onReorder={(ids) => void reorderGoals(dreams, ids)}
+        >
+          {dreams.map((dream) => (
+            <SortableItem key={dream.id} id={dream.id}>
+              <ButtonBase
+                component={RouterLink}
+                to={goalPath(dream.id)}
+                aria-label={t('goals.open', { title: dream.title })}
+                sx={{ width: '100%', justifyContent: 'flex-start', gap: 1.5, py: 1.5 }}
+              >
+                <Typography component="span" aria-hidden sx={{ color: 'primary.main' }}>
+                  ✦
+                </Typography>
+                <Typography component="span" sx={{ overflowWrap: 'anywhere', textAlign: 'left' }}>
+                  {dream.title}
+                </Typography>
+              </ButtonBase>
+            </SortableItem>
+          ))}
+        </SortableList>
       </Card>
     </>
   );

@@ -9,13 +9,23 @@ import { AddInlineRow } from '@/ui/AddInlineRow';
 import { Card } from '@/ui/Card';
 import { InlineInput } from '@/ui/InlineInput';
 import { SettingsSection } from '@/ui/SettingsSection';
+import { SortableList } from '@/ui/SortableList';
+import { draggingSx, useSortableRow } from '@/ui/useSortableRow';
 
-import { addGoalStep, deleteGoalStep, setGoalStepDone, updateGoalStepText } from '../api/goals.api';
+import {
+  addGoalStep,
+  deleteGoalStep,
+  reorderGoalSteps,
+  setGoalStepDone,
+  updateGoalStepText,
+} from '../api/goals.api';
 
 const StepRow: FC<{ step: GoalStep }> = ({ step }) => {
   const [editing, setEditing] = useState(false);
 
   const { t } = useTranslation();
+
+  const { setNodeRef, style, dragProps, isDragging } = useSortableRow(step.id, editing);
 
   const save = (text: string) => {
     setEditing(false);
@@ -24,7 +34,12 @@ const StepRow: FC<{ step: GoalStep }> = ({ step }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 0.5 }}>
+    <Box
+      ref={setNodeRef}
+      {...dragProps}
+      style={{ ...style, ...dragProps.style }}
+      sx={{ display: 'flex', alignItems: 'flex-start', gap: 0.5, ...(isDragging && draggingSx) }}
+    >
       <Checkbox
         checked={step.done}
         onChange={(_, done) => void setGoalStepDone(step.id, done)}
@@ -91,9 +106,14 @@ export const StepsList: FC<Props> = ({ goalId, steps }) => {
       }
     >
       <Card>
-        {steps.map((step) => (
-          <StepRow key={step.id} step={step} />
-        ))}
+        <SortableList
+          ids={steps.map((step) => step.id)}
+          onReorder={(ids) => void reorderGoalSteps(ids)}
+        >
+          {steps.map((step) => (
+            <StepRow key={step.id} step={step} />
+          ))}
+        </SortableList>
         <AddInlineRow
           label={t('goals.card.addStep')}
           placeholder={t('goals.card.newStep')}
