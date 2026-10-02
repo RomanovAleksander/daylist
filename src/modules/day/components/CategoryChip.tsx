@@ -28,15 +28,18 @@ export const CategoryChip: FC<Props> = ({ categories, selected, onSelect, onCrea
   return (
     <>
       <Button
-        variant="contained"
-        disableElevation
         aria-label={t('day.pickCategory')}
         aria-haspopup="menu"
         onClick={(event: MouseEvent<HTMLElement>) => setAnchor(event.currentTarget)}
         endIcon={<ArrowDropDownIcon />}
+        // Тональная, а не залитая: акцентом на экране остаётся кольцо дня.
         sx={{
-          borderRadius: 3,
+          borderRadius: 3.5,
           flex: 'none',
+          bgcolor: 'background.paper',
+          border: 1,
+          borderColor: 'divider',
+          color: 'text.primary',
           maxWidth: '42%',
           fontWeight: 600,
           px: 1.5,

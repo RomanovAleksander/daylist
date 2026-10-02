@@ -114,7 +114,11 @@ export const InboxScreen: FC = () => {
           </Collapse>
         </>
       )}
-      <Composer placeholder={t('inbox.capture')} onSubmit={(text) => void addInboxItem(text)} />
+      <Composer
+        placeholder={t('inbox.capture')}
+        submitLabel={t('common.add')}
+        onSubmit={(text) => void addInboxItem(text)}
+      />
       {opened && (
         <InboxSheet
           key={opened.id}
