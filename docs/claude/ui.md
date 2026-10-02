@@ -2,24 +2,18 @@
 
 ## Principles
 
-Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, light and system available. System font stack (no web fonts). Accent: amber `#E8A34A` (dark) — checkboxes, carry badges, active tab, chart; stale badges use a terracotta warning colour. No haptics. Tap targets ≥ 48px. Nothing on the today screen that is not a task, a category or the add row.
+Simple like a banking app: one primary action per screen, the key number large, item actions in a bottom sheet with labelled rows (`BottomSheet` + `SheetAction`) instead of small unlabeled icons, rarely changed settings behind «⋯». Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, light and system available. System font stack. Accent: amber `#E8A34A` (dark); stale badges use a terracotta warning colour. No haptics. Tap targets ≥ 48px. Cards have large radii (~20px).
 
-## Today screen (variant "Note")
+## Today screen
 
-- Header: date (`П’ятниця, 2 жовтня`), under it `2 з 9` and the sync dot. Nothing else.
-- Category = small uppercase muted heading with a muted `1/3` counter on the right.
-- Task row: checkbox (own 48px tap zone, toggles), text (tap → inline edit), carry badge `↻ N дн.` (accent; warning colour when stale).
-- Done tasks are struck through and move to the bottom of their block with a short animation. Tapping again un-ticks.
-- `+ задача` closes each block: Enter adds and keeps the input open for the next task; empty Enter, Esc or blur closes it.
-- Edit mode: Enter / blur saves, Esc cancels, empty text deletes; inline actions `↻` (make recurring → template) and delete (for desktop).
-- Task order inside a category: new tasks go to the end of the undone ones; no drag-and-drop for tasks.
-- Delete: swipe left on touch, delete action in edit mode on desktop; no confirmation, `UndoSnackbar` for ~5 s.
-- After assembly with carried tasks, a one-time quiet line: `Перенесено N задачі з минулого дня`.
-- Tap on a stale badge → actions: to template / delete / keep.
-- A category with no tasks today still shows its heading and `+ задача`.
-- After the last category a muted `+ категорія` row adds a category inline (same behaviour as `+ задача`); renaming, reordering and deleting stay in settings.
-- All done: the `9 з 9` line becomes `День закрито ✓` in accent. No animation beyond that.
-- Empty state (no categories): `Додай першу категорію` with an inline input.
+- Hero: `ProgressRing` with `4/9` and `%`, weekday in bold, date (or `День закрито ✓`) and the one-time line `Перенесено N задачі з минулого дня`.
+- Each category is a rounded card: optional emoji, name, `1/3` counter. A fully done category collapses to one line with `✓`; the arrow expands it.
+- Tap on the category name → category sheet: emoji picker, name, «Додати задачу сюди» (switches the composer to this category and focuses it), «Вище» / «Нижче», delete with confirmation.
+- Task row: checkbox (toggles), text (tap → task sheet), carry badge `↻ N дн.` (warning colour when stale). Swipe left deletes with an undo snackbar.
+- Task sheet: editable text (saved on close and before any action), «Робити щодня» (→ template), «Перенести у Вхідні», «Інша категорія», «Видалити задачу».
+- Adding: only through the bottom `Composer` above the navigation — a category chip (last choice remembered per device, menu also has «Нова категорія») and the input; Enter adds and keeps focus. No add rows inside cards.
+- Done tasks are struck through and sink to the bottom of their card. New tasks go to the end of the undone ones; no drag-and-drop for tasks.
+- Empty state (no categories): `Додай першу категорію` with an inline input; the composer appears once a category exists.
 
 ## Loading
 
@@ -31,22 +25,22 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 
 ## Inbox screen
 
-- Capture field always visible at the top: Enter adds and keeps focus for the next thought. No floating button, no reminder on the today screen.
-- Rows: checkbox, text (tap → inline edit with delete and «→ Сьогодні» actions), age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`).
+- The same bottom `Composer` («Що спало на думку?»): Enter adds and keeps focus. No reminder on the today screen.
+- Rows: checkbox, text (tap → sheet: edit text, «Перенести в сьогодні» with a category list, delete), age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`).
 - Swipe left deletes (undo snackbar), swipe right opens the category picker and moves the task to today.
 - Collapsed «Зроблено · N» at the bottom (last 30 days).
 
 ## Goals screen
 
-- Sections: «З дедлайном» (cards: title, days left, progress bar, meta, time bar «минуло N% часу»), «Глобальні» (→ rows), «Мрії» (round checkbox rows), collapsed «Досягнуто · N».
-- Each section ends with an add row: the title is typed inline, everything else is set in the goal card.
-- Goal card: title, type, deadline, measure (steps / number / none), number fields with «+ додати», description «Що робити», steps checklist, achieved / delete actions.
+- One list of «jars», no sections: dated goals by deadline, then global goals, then dreams; collapsed «Досягнуто · N» below. Each jar: `ProgressRing` (steps `1/2`, percent, time elapsed for a dated goal without a measure, `→` global, `✦` dream), title, subtitle (amount, next step, deadline, «без дати», «мрія»), days left on the right (`−N дн.` when overdue).
+- «+ Ціль» in the header opens a three-step wizard, one question per screen: name + goal/dream (a dream is created right away) → date (end of month / end of year / custom / no date → global) → measure (steps / amount with target and unit / just the countdown).
+- Goal screen: big ring (amount and target for number goals), one context line (days left, ≈ per month), one primary button («+ Додати суму» → amount sheet, «Досягнуто ✓», «Збулось ✓»; none for step goals — the steps list is the action), overdue → three actions, steps list, «Що робити» description. Type, deadline, measure, number fields, reopen and delete live in the «⋯» sheet.
 
 ## Other screens
 
 - **History** — feed of past days, newest first, loading backwards on scroll; each day shows `7/9 · 78%` and expands into `DayView` (read-only, retroactive tick allowed).
 - **Stats** — today `X/Y`; week bars (`@mui/x-charts`) with days ≥ 80% in accent; per category "closed fully N of M days" for week/month; streak of days ≥ 80% (a missed day is assembled with everything undone, so it breaks the streak); stale tasks list.
-- **Settings** — one scrolling screen: categories (rename inline, reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, day start hour 00:00–06:00), data (export/import JSON).
+- **Settings** — one scrolling screen: categories (also manageable from the today screen; here rename inline and reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, day start hour 00:00–06:00), data (export/import JSON).
 
 ## Out of scope
 
@@ -60,4 +54,4 @@ Reminders, notifications and app badges — reliable PWA push needs a server, an
 
 ## i18n
 
-One dictionary `src/locales/uk.json`. Every user-facing string goes through `t()`. Keys are grouped by module (`day.addTask`, `settings.theme.dark`). Plurals via i18next plural suffixes (`_one`, `_few`, `_many`).
+One dictionary `src/locales/uk.json`. Every user-facing string goes through `t()`. Keys are grouped by module (`day.newTaskIn`, `goals.wizard.next`). Remove keys that lose their last usage. Plurals via i18next plural suffixes (`_one`, `_few`, `_many`).
