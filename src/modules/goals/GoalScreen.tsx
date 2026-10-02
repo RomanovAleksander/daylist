@@ -99,6 +99,10 @@ export const GoalScreen: FC = () => {
           value={goal.description}
           onCommit={(description) => void updateGoal(goal.id, { description: description.trim() })}
           slotProps={{ htmlInput: { 'aria-label': t('goals.card.description') } }}
+          sx={{
+            '& .MuiOutlinedInput-root': { bgcolor: 'background.paper', borderRadius: 5 },
+            '& .MuiOutlinedInput-root:not(.Mui-focused) fieldset': { borderColor: 'transparent' },
+          }}
         />
       </SettingsSection>
       {sheet === 'options' && <GoalOptionsSheet goal={goal} onClose={() => setSheet(null)} />}

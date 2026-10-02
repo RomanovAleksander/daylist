@@ -2,7 +2,9 @@
 
 ## Principles
 
-Simple like a banking app: one primary action per screen, the key number large, item actions in a bottom sheet with labelled rows (`BottomSheet` + `SheetAction`) instead of small unlabeled icons, rarely changed settings behind «⋯». Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, light and system available. System font stack. Accent: amber `#E8A34A` (dark); stale badges use a terracotta warning colour. No haptics. Tap targets ≥ 48px. Cards have large radii (~20px).
+Simple like a banking app: one primary action per screen, the key number large, item actions in a bottom sheet with labelled rows (`BottomSheet` + `SheetAction`) instead of small unlabeled icons, rarely changed settings behind «⋯». Mobile-first, one column, max ~600px centred on desktop. Dark theme by default, light and system available. System font stack. Accent: amber `#E8A34A` (dark); stale badges use a terracotta warning colour. No haptics. Tap targets ≥ 48px.
+
+Scale: rows are grouped in `ui/Card` (radius 20px, 16px side padding, 12px between cards); sheets 24px; inputs, the composer and large buttons 14px, 48–52px high; chips and buttons 12px; icon tiles 10px. Section labels are 12px uppercase secondary. Body text 16px, secondary lines 13px, screen titles 22px.
 
 ## Today screen
 
@@ -36,7 +38,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 
 ## Goals screen
 
-- One list of «jars», no sections: dated goals by deadline, then global goals, then dreams; collapsed «Досягнуто · N» below. Each jar: `ProgressRing` (steps `1/2`, percent, time elapsed for a dated goal without a measure, `→` global, `✦` dream), title, subtitle (amount, next step, deadline, «без дати», «мрія»), days left on the right (`−N дн.` when overdue).
+- One card of rows, no rings: title with days left on the right (`−N дн.` when overdue), a subtitle (`Кроки 1/3 · наступне: …`, `$4 315 з $12 000`, deadline, «без дати») and a thin bar — accent for steps/amount, grey for elapsed time of a dated goal without a measure. Dated goals by deadline, then global goals. Dreams follow under «Мрії» as `✦ title` rows; collapsed «Досягнуто · N» below.
 - «+ Ціль» in the header opens one sheet: name, «Коли?» (end of month / end of year / custom / no date → global / ✦ dream) and, unless it is a dream, «Як міряти прогрес?» (just the time, default / steps / amount with target and unit). The measure stays an explicit choice; it can be changed later in «⋯».
 - Goal screen: big ring (amount and target for number goals), one context line (days left, ≈ per month), one primary button («+ Додати суму» → amount sheet, «Досягнуто ✓», «Збулось ✓»; none for step goals — the steps list is the action), overdue → three actions, steps list, «Що робити» description. Type, deadline, measure, number fields, reopen and delete live in the «⋯» sheet.
 
@@ -53,6 +55,7 @@ Reminders, notifications and app badges — reliable PWA push needs a server, an
 ## MUI
 
 - Colours, radii and spacing come from theme tokens in `app/theme/` — no literal colours in components.
+- A numeric `borderRadius` in `sx` is multiplied by `shape.borderRadius`; keep that unit at 4px, or every radius in the app scales with it.
 - Clickable wrappers declare what they render (`component="button"` / `RouterLink`) — linted.
 - Every icon-only button has an accessible name via `aria-label` from i18n.
 
