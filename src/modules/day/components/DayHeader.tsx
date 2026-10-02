@@ -9,9 +9,10 @@ interface Props {
   date: DateKey;
   done: number;
   total: number;
+  carried: number;
 }
 
-export const DayHeader: FC<Props> = ({ date, done, total }) => {
+export const DayHeader: FC<Props> = ({ date, done, total, carried }) => {
   const { t } = useTranslation();
 
   const closed = total > 0 && done === total;
@@ -27,6 +28,11 @@ export const DayHeader: FC<Props> = ({ date, done, total }) => {
       >
         {closed ? t('day.closed') : total > 0 && t('day.progress', { done, total })}
       </Typography>
+      {carried > 0 && (
+        <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+          {t('day.carriedNotice', { count: carried })}
+        </Typography>
+      )}
     </Box>
   );
 };
