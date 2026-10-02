@@ -122,6 +122,7 @@ Navigate via constants only: `navigate(PagesConfig.STATS)`. `HashRouter` because
 - Conventional Commits, English, imperative, lower case, no trailing period, **subject only — no body, no trailers**. Scope = module (`app layout day inbox goals history stats settings sync db ui pwa deps`) or none for repo-wide changes. Linted by commitlint.
 - One logical step per commit; every commit passes typecheck, lint and build.
 - `lefthook` runs `lint-staged` on pre-commit and `commitlint` on commit-msg — never bypass with `--no-verify`.
+- Claude opens PRs to `main` itself and merges them (rebase) once CI is green and there are no conflicts; then confirms the Pages deploy.
 
 ## Bug fix protocol
 
