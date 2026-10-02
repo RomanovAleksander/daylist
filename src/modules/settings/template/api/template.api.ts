@@ -41,14 +41,34 @@ export const addTemplateItem = (categoryId: string, text: string, today: DateKey
 export const promoteTaskToTemplate = (task: Task) =>
   db.transaction('rw', db.templateItems, db.tasks, async () => {
     const now = Date.now();
+    const templateItemId = createId();
     await db.templateItems.add({
-      id: createId(),
+      id: templateItemId,
       categoryId: task.categoryId,
       text: task.text,
       order: await nextOrder(task.categoryId),
       updatedAt: now,
     });
-    await db.tasks.update(task.id, { recurring: true, updatedAt: now });
+    await db.tasks.update(task.id, { recurring: true, templateItemId, updatedAt: now });
+  });
+
+// Задачи, ставшие ежедневными до появления templateItemId, ищем по категории и тексту.
+const findTemplateItemId = async (task: Task) => {
+  if (task.templateItemId) return task.templateItemId;
+  if (task.id.startsWith('tpl:')) return task.id.slice(task.id.lastIndexOf(':') + 1);
+  const items = await db.templateItems.where('categoryId').equals(task.categoryId).toArray();
+  return items.find((item) => !item.deleted && item.text === task.text)?.id;
+};
+
+/** Обратное к promoteTaskToTemplate: пункт шаблона уходит, сегодняшняя задача становится разовой. */
+export const stopTaskRecurring = (task: Task) =>
+  db.transaction('rw', db.templateItems, db.tasks, async () => {
+    const now = Date.now();
+    const templateItemId = await findTemplateItemId(task);
+    if (templateItemId) {
+      await db.templateItems.update(templateItemId, { deleted: true, updatedAt: now });
+    }
+    await db.tasks.update(task.id, { recurring: false, templateItemId: undefined, updatedAt: now });
   });
 
 export const updateTemplateItemText = (id: string, text: string) =>
