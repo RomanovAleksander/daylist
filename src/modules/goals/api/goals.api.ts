@@ -2,8 +2,10 @@ import { db, type Goal, type GoalKind } from '@/db';
 import type { DateKey } from '@/utils/date';
 import { createId } from '@/utils/id';
 
+export type GoalChanges = Partial<Omit<Goal, 'id' | 'updatedAt'>>;
+
 /** Транзакция: см. addCategory — иначе две быстро добавленные цели получат один order. */
-export const addGoal = (kind: GoalKind, title: string, today: DateKey) =>
+export const addGoal = (kind: GoalKind, title: string, today: DateKey, extra: GoalChanges = {}) =>
   db.transaction('rw', db.goals, async () => {
     const all = await db.goals.toArray();
     const goal: Goal = {
@@ -15,12 +17,11 @@ export const addGoal = (kind: GoalKind, title: string, today: DateKey) =>
       measure: 'none',
       order: Math.max(0, ...all.map((g) => g.order)) + 1,
       updatedAt: Date.now(),
+      ...extra,
     };
     await db.goals.add(goal);
     return goal.id;
   });
-
-export type GoalChanges = Partial<Omit<Goal, 'id' | 'updatedAt'>>;
 
 export const updateGoal = (id: string, changes: GoalChanges) =>
   db.goals.update(id, { ...changes, updatedAt: Date.now() });

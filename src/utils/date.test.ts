@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { addDays, diffDays, formatDayTitle, msUntilNextDay, todayKey } from './date';
+import {
+  addDays,
+  diffDays,
+  endOfMonth,
+  endOfYear,
+  formatDayTitle,
+  msUntilNextDay,
+  todayKey,
+} from './date';
 
 describe('date', () => {
   it('treats hours before day start as the previous day', () => {
@@ -13,6 +21,11 @@ describe('date', () => {
     expect(addDays('2026-09-30', 1)).toBe('2026-10-01');
     expect(addDays('2026-10-01', -1)).toBe('2026-09-30');
     expect(diffDays('2026-10-02', '2026-09-28')).toBe(4);
+  });
+
+  it('finds the end of month and year', () => {
+    expect(endOfMonth('2026-02-10')).toBe('2026-02-28');
+    expect(endOfYear('2026-10-02')).toBe('2026-12-31');
   });
 
   it('counts time until the next day start', () => {

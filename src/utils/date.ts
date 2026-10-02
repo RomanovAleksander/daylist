@@ -40,3 +40,7 @@ export const formatWeekday = (key: DateKey): string =>
   capitalize(dayjs(key).locale('uk').format('dddd'));
 
 export const formatDayMonth = (key: DateKey): string => dayjs(key).locale('uk').format('D MMMM');
+
+export const endOfMonth = (key: DateKey): DateKey => dayjs(key).endOf('month').format(FORMAT);
+
+export const endOfYear = (key: DateKey): DateKey => dayjs(key).endOf('year').format(FORMAT);
