@@ -9,7 +9,7 @@ import type { Category, InboxItem } from '@/db';
 import { BottomSheet } from '@/ui/BottomSheet';
 import { SheetAction } from '@/ui/SheetAction';
 
-import { updateInboxItemText } from '../api/inbox.api';
+import { updateInboxItem } from '../api/inbox.api';
 
 interface Props {
   item: InboxItem;
@@ -21,15 +21,17 @@ interface Props {
 
 export const InboxSheet: FC<Props> = ({ item, categories, onClose, onDelete, onToToday }) => {
   const [text, setText] = useState(item.text);
+  const [note, setNote] = useState(item.note ?? '');
   const [pickCategory, setPickCategory] = useState(false);
 
   const { t } = useTranslation();
 
-  // Текст сохраняем перед любым действием: перенос в день берёт уже исправленную формулировку.
+  // Текст и описание сохраняем перед любым действием: перенос в день берёт исправленную формулировку.
   const run = (action: (current: InboxItem) => void) => {
-    const trimmed = text.trim();
-    const current = trimmed && trimmed !== item.text ? { ...item, text: trimmed } : item;
-    if (current !== item) void updateInboxItemText(item.id, trimmed);
+    const current = { ...item, text: text.trim() || item.text, note: note.trim() || undefined };
+    if (current.text !== item.text || current.note !== item.note) {
+      void updateInboxItem(item.id, { text: current.text, note: current.note });
+    }
     action(current);
     onClose();
   };
@@ -49,6 +51,24 @@ export const InboxSheet: FC<Props> = ({ item, categories, onClose, onDelete, onT
           }
         }}
         sx={{ bgcolor: 'background.default', borderRadius: 3, px: 1.5, py: 1, mb: 1 }}
+      />
+      <InputBase
+        fullWidth
+        multiline
+        minRows={2}
+        value={note}
+        placeholder={t('inbox.notePlaceholder')}
+        inputProps={{ 'aria-label': t('inbox.note') }}
+        onChange={(event) => setNote(event.target.value)}
+        sx={{
+          bgcolor: 'background.default',
+          borderRadius: 3,
+          px: 1.5,
+          py: 1,
+          mb: 1,
+          fontSize: 15,
+          color: 'text.secondary',
+        }}
       />
       {pickCategory ? (
         <Box>

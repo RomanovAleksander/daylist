@@ -34,7 +34,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 ## Inbox screen
 
 - The same bottom `Composer` («Що спало на думку?»): Enter adds and keeps focus. No reminder on the today screen.
-- Rows: checkbox, text (tap → sheet: edit text, «Перенести в сьогодні» with a category list, delete), age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`).
+- Rows: checkbox, text with up to two grey lines of its description below, age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`). Tap → sheet: edit text, «Опис» (multiline, saved on close), «Перенести в сьогодні» with a category list, delete. Day tasks have no description, so moving to today keeps only the text.
 - Swipe left deletes (undo snackbar), swipe right opens the category picker and moves the task to today.
 - Collapsed «Зроблено · N» at the bottom (last 30 days).
 
