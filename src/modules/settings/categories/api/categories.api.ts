@@ -3,12 +3,27 @@ import { createId } from '@/utils/id';
 
 // Чтение максимального order и запись — в одной транзакции: при быстром вводе двух категорий
 // подряд иначе обе получают один номер и порядок между ними случаен.
-export const addCategory = (name: string) =>
+export const addCategory = (name: string, emoji?: string) =>
   db.transaction('rw', db.categories, async () => {
     const all = await db.categories.toArray();
     const order = Math.max(0, ...all.map((c) => c.order)) + 1;
-    await db.categories.add({ id: createId(), name, order, updatedAt: Date.now() });
+    const id = createId();
+    await db.categories.add({ id, name, emoji, order, updatedAt: Date.now() });
+    return id;
   });
+
+export const setCategoryEmoji = (id: string, emoji: string | undefined) =>
+  db.categories.update(id, { emoji, updatedAt: Date.now() });
+
+/** Сдвиг на одну позицию вверх или вниз среди живых категорий. */
+export const moveCategory = (ids: string[], id: string, direction: -1 | 1) => {
+  const from = ids.indexOf(id);
+  const to = from + direction;
+  if (from < 0 || to < 0 || to >= ids.length) return Promise.resolve();
+  const next = [...ids];
+  [next[from], next[to]] = [next[to] as string, next[from] as string];
+  return reorderCategories(next);
+};
 
 export const renameCategory = (id: string, name: string) =>
   db.categories.update(id, { name, updatedAt: Date.now() });
