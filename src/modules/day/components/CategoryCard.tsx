@@ -6,8 +6,9 @@ import { Box, ButtonBase, Collapse, IconButton, Typography } from '@mui/material
 
 import type { Category, Task } from '@/db';
 import { Card } from '@/ui/Card';
+import { useSortableRow } from '@/ui/useSortableRow';
 
-import { TaskRow } from './TaskRow';
+import { TaskList } from './TaskList';
 import type { CategoryGroup } from '../utils/groupTasks';
 
 interface Props {
@@ -48,58 +49,68 @@ export const CategoryCard: FC<Props> = ({ group, onOpenCategory, onOpenTask, onD
 
   const { t } = useTranslation();
 
+  const { setNodeRef, style, dragProps, isDragging } = useSortableRow(category.id);
+
   const open = !closed || expanded;
 
   return (
-    <Card label={category.name}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <ButtonBase
-          onClick={() => onOpenCategory(category)}
-          sx={{
-            flex: 1,
-            minWidth: 0,
-            justifyContent: 'flex-start',
-            gap: 1,
-            py: 0.75,
-            textAlign: 'left',
-          }}
+    <Box
+      ref={setNodeRef}
+      style={style}
+      sx={{ borderRadius: 5, boxShadow: isDragging ? 8 : 'none' }}
+    >
+      <Card label={category.name}>
+        <Box
+          {...dragProps}
+          style={dragProps.style}
+          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
         >
-          <CategoryEmoji emoji={category.emoji} />
-          <Typography component="h2" sx={{ fontWeight: 600, overflowWrap: 'anywhere' }}>
-            {category.name}
-          </Typography>
-        </ButtonBase>
-        {tasks.length > 0 && (
-          <Typography
+          <ButtonBase
+            onClick={() => onOpenCategory(category)}
             sx={{
-              color: closed ? 'primary.main' : 'text.secondary',
-              fontSize: 13,
-              whiteSpace: 'nowrap',
+              flex: 1,
+              minWidth: 0,
+              justifyContent: 'flex-start',
+              gap: 1,
+              py: 0.75,
+              textAlign: 'left',
             }}
           >
-            {doneCount}/{tasks.length}
-            {closed && ' ✓'}
-          </Typography>
-        )}
-        {closed && (
-          <IconButton
-            size="small"
-            aria-expanded={open}
-            aria-label={t(open ? 'day.collapse' : 'day.expand')}
-            onClick={() => setExpanded((value) => !value)}
-          >
-            <ExpandMoreIcon
-              fontSize="small"
-              sx={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
-            />
-          </IconButton>
-        )}
-      </Box>
-      <Collapse in={open}>
-        {tasks.map((task) => (
-          <TaskRow key={task.id} task={task} onOpen={onOpenTask} onDelete={onDelete} />
-        ))}
-      </Collapse>
-    </Card>
+            <CategoryEmoji emoji={category.emoji} />
+            <Typography component="h2" sx={{ fontWeight: 600, overflowWrap: 'anywhere' }}>
+              {category.name}
+            </Typography>
+          </ButtonBase>
+          {tasks.length > 0 && (
+            <Typography
+              sx={{
+                color: closed ? 'primary.main' : 'text.secondary',
+                fontSize: 13,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {doneCount}/{tasks.length}
+              {closed && ' ✓'}
+            </Typography>
+          )}
+          {closed && (
+            <IconButton
+              size="small"
+              aria-expanded={open}
+              aria-label={t(open ? 'day.collapse' : 'day.expand')}
+              onClick={() => setExpanded((value) => !value)}
+            >
+              <ExpandMoreIcon
+                fontSize="small"
+                sx={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+              />
+            </IconButton>
+          )}
+        </Box>
+        <Collapse in={open}>
+          <TaskList tasks={tasks} onOpenTask={onOpenTask} onDelete={onDelete} />
+        </Collapse>
+      </Card>
+    </Box>
   );
 };

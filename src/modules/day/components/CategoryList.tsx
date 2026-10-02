@@ -3,9 +3,10 @@ import type { FC } from 'react';
 import { Box, ButtonBase, Typography } from '@mui/material';
 
 import type { Category, Task } from '@/db';
+import { draggingSx, useSortableRow } from '@/ui/useSortableRow';
 
 import { CategoryEmoji } from './CategoryCard';
-import { TaskRow } from './TaskRow';
+import { TaskList } from './TaskList';
 import type { CategoryGroup } from '../utils/groupTasks';
 
 interface Props {
@@ -20,9 +21,21 @@ export const CategoryList: FC<Props> = ({ group, onOpenCategory, onOpenTask, onD
   const { category, tasks, doneCount } = group;
   const closed = tasks.length > 0 && doneCount === tasks.length;
 
+  const { setNodeRef, style, dragProps, isDragging } = useSortableRow(category.id);
+
   return (
-    <Box component="section" aria-label={category.name} sx={{ mb: 1.5 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Box
+      ref={setNodeRef}
+      style={style}
+      component="section"
+      aria-label={category.name}
+      sx={{ mb: 1.5, ...(isDragging && { ...draggingSx, px: 1 }) }}
+    >
+      <Box
+        {...dragProps}
+        style={dragProps.style}
+        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+      >
         <ButtonBase
           onClick={() => onOpenCategory(category)}
           sx={{ flex: 1, minWidth: 0, justifyContent: 'flex-start', gap: 1, py: 1 }}
@@ -52,9 +65,7 @@ export const CategoryList: FC<Props> = ({ group, onOpenCategory, onOpenTask, onD
           </Typography>
         )}
       </Box>
-      {tasks.map((task) => (
-        <TaskRow key={task.id} task={task} flat onOpen={onOpenTask} onDelete={onDelete} />
-      ))}
+      <TaskList tasks={tasks} flat onOpenTask={onOpenTask} onDelete={onDelete} />
     </Box>
   );
 };

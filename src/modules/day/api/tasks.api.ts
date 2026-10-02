@@ -36,6 +36,14 @@ export const deleteTask = (id: string) =>
 export const restoreTask = (id: string) =>
   db.tasks.update(id, { deleted: undefined, updatedAt: Date.now() });
 
+/** Порядок пишем всей категории разом: см. reorderCategories. */
+export const reorderTasks = (ids: string[]) => {
+  const updatedAt = Date.now();
+  return db.tasks.bulkUpdate(
+    ids.map((id, index) => ({ key: id, changes: { order: index + 1, updatedAt } }))
+  );
+};
+
 export const setTaskCategory = (id: string, categoryId: string) =>
   db.tasks.update(id, { categoryId, updatedAt: Date.now() });
 
