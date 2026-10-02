@@ -1,6 +1,6 @@
 import { ENTITY_KEYS, type Snapshot } from './snapshot.schema';
 
-interface Versioned {
+export interface Versioned {
   id: string;
   updatedAt: number;
   deleted?: true;
@@ -13,8 +13,11 @@ interface Versioned {
 export const pickNewer = <T extends Versioned>(a: T, b: T): T => {
   if (a.updatedAt !== b.updatedAt) return a.updatedAt > b.updatedAt ? a : b;
   if (Boolean(a.deleted) !== Boolean(b.deleted)) return a.deleted ? a : b;
-  return JSON.stringify(a) >= JSON.stringify(b) ? a : b;
+  return stableJson(a) >= stableJson(b) ? a : b;
 };
+
+// Порядок ключей у объекта из IndexedDB и из JSON может отличаться — сравниваем без него.
+const stableJson = (value: object) => JSON.stringify(value, Object.keys(value).sort());
 
 const mergeById = <T extends Versioned>(left: T[], right: T[]): T[] => {
   const byId = new Map<string, T>();
