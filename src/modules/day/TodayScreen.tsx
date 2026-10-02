@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import type { Category, Task } from '@/db';
 import { useToday } from '@/hooks/useToday';
-import { CategorySheet, useCategories } from '@/modules/settings/categories';
+import { CategorySheet, reorderCategories, useCategories } from '@/modules/settings/categories';
 import { useUIStore } from '@/store/ui.store';
 import { Composer } from '@/ui/Composer';
+import { SortableList } from '@/ui/SortableList';
 import { UndoSnackbar } from '@/ui/UndoSnackbar';
 
 import { addTask, deleteTask, restoreTask } from './api/tasks.api';
@@ -67,15 +68,20 @@ export const TodayScreen: FC = () => {
         <DayHero date={today} done={done} total={total} carried={carried} />
       )}
       {categories.length === 0 && <FirstCategory />}
-      {groups.map((group) => (
-        <CategoryGroupView
-          key={group.category.id}
-          group={group}
-          onOpenCategory={(category) => setCategorySheet({ category })}
-          onOpenTask={setOpenTask}
-          onDelete={handleDelete}
-        />
-      ))}
+      <SortableList
+        ids={categories.map((category) => category.id)}
+        onReorder={(ids) => void reorderCategories(ids)}
+      >
+        {groups.map((group) => (
+          <CategoryGroupView
+            key={group.category.id}
+            group={group}
+            onOpenCategory={(category) => setCategorySheet({ category })}
+            onOpenTask={setOpenTask}
+            onDelete={handleDelete}
+          />
+        ))}
+      </SortableList>
       {selected && (
         <Composer
           placeholder={t('day.newTaskIn')}
