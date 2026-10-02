@@ -1,11 +1,14 @@
 import { db } from '@/db';
 import { createId } from '@/utils/id';
 
-export const addCategory = async (name: string): Promise<void> => {
-  const all = await db.categories.toArray();
-  const order = Math.max(0, ...all.map((c) => c.order)) + 1;
-  await db.categories.add({ id: createId(), name, order, updatedAt: Date.now() });
-};
+// Чтение максимального order и запись — в одной транзакции: при быстром вводе двух категорий
+// подряд иначе обе получают один номер и порядок между ними случаен.
+export const addCategory = (name: string) =>
+  db.transaction('rw', db.categories, async () => {
+    const all = await db.categories.toArray();
+    const order = Math.max(0, ...all.map((c) => c.order)) + 1;
+    await db.categories.add({ id: createId(), name, order, updatedAt: Date.now() });
+  });
 
 export const renameCategory = (id: string, name: string) =>
   db.categories.update(id, { name, updatedAt: Date.now() });
