@@ -11,13 +11,16 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
     "@eslint/js": "^9.39.5",
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
@@ -31,6 +34,8 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.13.0",
+    "lefthook": "^2.1.16",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.9.9",
     "typescript": "~5.9",
     "typescript-eslint": "^8.71.0",
