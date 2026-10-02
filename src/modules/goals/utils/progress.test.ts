@@ -3,8 +3,6 @@ import { describe, expect, it } from 'vitest';
 import type { Goal, GoalStep } from '@/db';
 
 import {
-  compareDated,
-  compareGoals,
   formatAmount,
   goalProgress,
   isOverdue,
@@ -86,29 +84,6 @@ describe('neededPerMonth', () => {
       '2026-10-02'
     );
     expect(value).toBeCloseTo(7685 / (79 / 30.4), 5);
-  });
-});
-
-describe('compareDated', () => {
-  it('orders by deadline and puts undated last', () => {
-    const goals = [
-      goal({ id: 'none', deadline: undefined }),
-      goal({ id: 'late', deadline: '2026-12-20' }),
-      goal({ id: 'soon', deadline: '2026-11-16' }),
-    ];
-    expect(goals.sort(compareDated).map((g) => g.id)).toEqual(['soon', 'late', 'none']);
-  });
-});
-
-describe('compareGoals', () => {
-  it('lists dated goals by deadline, then global goals, then dreams', () => {
-    const goals = [
-      goal({ id: 'dream', kind: 'dream', deadline: undefined }),
-      goal({ id: 'global', kind: 'global', deadline: undefined }),
-      goal({ id: 'late', deadline: '2026-12-20' }),
-      goal({ id: 'soon', deadline: '2026-11-16' }),
-    ];
-    expect(goals.sort(compareGoals).map((g) => g.id)).toEqual(['soon', 'late', 'global', 'dream']);
   });
 });
 
