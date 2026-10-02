@@ -11,7 +11,7 @@ import {
   useColorScheme,
 } from '@mui/material';
 
-import { useUIStore } from '@/store/ui.store';
+import { useUIStore, type TodayLayout } from '@/store/ui.store';
 import { SettingsSection } from '@/ui/SettingsSection';
 
 type Mode = 'dark' | 'light' | 'system';
@@ -25,6 +25,8 @@ export const AppearanceSection: FC = () => {
 
   const dayStartHour = useUIStore((s) => s.dayStartHour);
   const setDayStartHour = useUIStore((s) => s.setDayStartHour);
+  const todayLayout = useUIStore((s) => s.todayLayout);
+  const setTodayLayout = useUIStore((s) => s.setTodayLayout);
 
   return (
     <SettingsSection title={t('settings.appearance')}>
@@ -40,6 +42,21 @@ export const AppearanceSection: FC = () => {
         <ToggleButton value="dark">{t('settings.themeDark')}</ToggleButton>
         <ToggleButton value="light">{t('settings.themeLight')}</ToggleButton>
         <ToggleButton value="system">{t('settings.themeSystem')}</ToggleButton>
+      </ToggleButtonGroup>
+      <Typography id="today-layout-label" sx={{ mt: 1.5 }}>
+        {t('settings.todayLayout')}
+      </Typography>
+      <ToggleButtonGroup
+        exclusive
+        fullWidth
+        size="small"
+        aria-labelledby="today-layout-label"
+        value={todayLayout}
+        onChange={(_, value: TodayLayout | null) => value && setTodayLayout(value)}
+        sx={{ my: 1 }}
+      >
+        <ToggleButton value="cards">{t('settings.layoutCards')}</ToggleButton>
+        <ToggleButton value="list">{t('settings.layoutList')}</ToggleButton>
       </ToggleButtonGroup>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
         <Typography id="day-start-label">{t('settings.dayStart')}</Typography>

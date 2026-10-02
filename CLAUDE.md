@@ -70,7 +70,7 @@ src/
 | ----------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Categories, tasks, template, days, inbox, goals | IndexedDB — read with `useLiveQuery` in `hooks/`, write via `api/` (NEVER Zustand) |
 | Theme mode                                      | MUI `useColorScheme` (persists itself, per device)                                 |
-| Day start hour                                  | Zustand + `persist` (per device, not synced)                                       |
+| Day start hour, today layout                    | Zustand + `persist` (per device, not synced)                                       |
 | Sync status                                     | Zustand (`sync.store.ts`)                                                          |
 | Dropbox tokens                                  | `localStorage`, per device                                                         |
 | Current screen                                  | React Router                                                                       |

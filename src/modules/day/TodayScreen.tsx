@@ -11,6 +11,8 @@ import { UndoSnackbar } from '@/ui/UndoSnackbar';
 import { addTask, deleteTask, restoreTask } from './api/tasks.api';
 import { CategoryCard } from './components/CategoryCard';
 import { CategoryChip } from './components/CategoryChip';
+import { CategoryList } from './components/CategoryList';
+import { DayHeader } from './components/DayHeader';
 import { DayHero } from './components/DayHero';
 import { FirstCategory } from './components/FirstCategory';
 import { TaskSheet } from './components/TaskSheet';
@@ -30,6 +32,7 @@ export const TodayScreen: FC = () => {
 
   const composerCategoryId = useUIStore((s) => s.composerCategoryId);
   const setComposerCategoryId = useUIStore((s) => s.setComposerCategoryId);
+  const layout = useUIStore((s) => s.todayLayout);
 
   const today = useToday();
   const carried = useEnsureDay(today);
@@ -39,6 +42,7 @@ export const TodayScreen: FC = () => {
   const groups = useMemo(() => groupTasks(categories ?? [], tasks ?? []), [categories, tasks]);
   const total = groups.reduce((sum, g) => sum + g.tasks.length, 0);
   const done = groups.reduce((sum, g) => sum + g.doneCount, 0);
+  const CategoryGroupView = layout === 'list' ? CategoryList : CategoryCard;
   const selected = categories?.find((c) => c.id === composerCategoryId) ?? categories?.[0];
 
   const handleDelete = (task: Task) => {
@@ -57,10 +61,14 @@ export const TodayScreen: FC = () => {
 
   return (
     <>
-      <DayHero date={today} done={done} total={total} carried={carried} />
+      {layout === 'list' ? (
+        <DayHeader date={today} done={done} total={total} carried={carried} />
+      ) : (
+        <DayHero date={today} done={done} total={total} carried={carried} />
+      )}
       {categories.length === 0 && <FirstCategory />}
       {groups.map((group) => (
-        <CategoryCard
+        <CategoryGroupView
           key={group.category.id}
           group={group}
           onOpenCategory={(category) => setCategorySheet({ category })}

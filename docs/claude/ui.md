@@ -8,6 +8,8 @@ Scale: rows are grouped in `ui/Card` (radius 20px, 16px side padding, 12px betwe
 
 ## Today screen
 
+Two layouts, chosen per device in Settings → «Вигляд «Сьогодні»» (`todayLayout` in `ui.store`): «Картки» (default, described below) and «Список» — a `DayHeader` with `Пʼятниця, 2 жовтня`, `4 з 9 · 44%` and a thin bar, then each category as an uppercase label with its counter and flat task rows on the screen background. Rows, sheets and the composer are the same in both.
+
 - Hero: `ProgressRing` with `4/9` and `%`, weekday in bold, date (or `День закрито ✓`) and the one-time line `Перенесено N задачі з минулого дня`.
 - Each category is a rounded card: optional emoji, name, `1/3` counter. A fully done category collapses to one line with `✓`; the arrow expands it.
 - Tap on the category name → category sheet: emoji picker, name, «Додати задачу сюди» (switches the composer to this category and focuses it), «Вище» / «Нижче», delete with confirmation.
@@ -46,7 +48,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 
 - **History** — feed of past days, newest first, loading backwards on scroll; each day shows `7/9 · 78%` and expands into `DayView` (read-only, retroactive tick allowed).
 - **Stats** — today `X/Y`; week bars (`@mui/x-charts`) with days ≥ 80% in accent; per category "closed fully N of M days" for week/month; streak of days ≥ 80% (a missed day is assembled with everything undone, so it breaks the streak); stale tasks list.
-- **Settings** — one scrolling screen: categories (also manageable from the today screen; here rename inline and reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, day start hour 00:00–06:00), data (export/import JSON).
+- **Settings** — one scrolling screen: categories (also manageable from the today screen; here rename inline and reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, today layout cards / list, day start hour 00:00–06:00), data (export/import JSON).
 
 ## Out of scope
 
