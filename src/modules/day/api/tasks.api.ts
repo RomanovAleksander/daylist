@@ -35,3 +35,20 @@ export const deleteTask = (id: string) =>
 
 export const restoreTask = (id: string) =>
   db.tasks.update(id, { deleted: undefined, updatedAt: Date.now() });
+
+export const setTaskCategory = (id: string, categoryId: string) =>
+  db.tasks.update(id, { categoryId, updatedAt: Date.now() });
+
+/** «Не сегодня»: задача уходит во вхідні как новая мысль, а в дне остаётся tombstone. */
+export const moveTaskToInbox = (task: Task) =>
+  db.transaction('rw', db.tasks, db.inboxItems, async () => {
+    const now = Date.now();
+    await db.inboxItems.add({
+      id: createId(),
+      text: task.text,
+      createdAt: now,
+      done: false,
+      updatedAt: now,
+    });
+    await db.tasks.update(task.id, { deleted: true, updatedAt: now });
+  });
