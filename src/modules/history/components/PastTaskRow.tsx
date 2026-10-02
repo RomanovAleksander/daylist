@@ -36,7 +36,10 @@ export const PastTaskRow: FC<Props> = ({ task }) => {
       >
         {task.text}
         {wasCarried(task) && (
-          <Typography component="span" sx={{ color: 'text.secondary', fontSize: 12, ml: 1 }}>
+          <Typography
+            component="span"
+            sx={{ color: 'text.secondary', fontSize: 12, ml: 1, whiteSpace: 'nowrap' }}
+          >
             {t('history.carried')}
           </Typography>
         )}
