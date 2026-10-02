@@ -7,20 +7,27 @@ import { ButtonBase, Collapse, Typography } from '@mui/material';
 import type { Category, InboxItem } from '@/db';
 import { useToday } from '@/hooks/useToday';
 import { useCategories } from '@/modules/settings/categories';
+import { Composer } from '@/ui/Composer';
 import { EmptyState } from '@/ui/EmptyState';
 import { ScreenHeader } from '@/ui/ScreenHeader';
 import { UndoSnackbar } from '@/ui/UndoSnackbar';
 
-import { deleteInboxItem, moveInboxItemToToday, restoreInboxItem } from './api/inbox.api';
-import { CaptureField } from './components/CaptureField';
+import {
+  addInboxItem,
+  deleteInboxItem,
+  moveInboxItemToToday,
+  restoreInboxItem,
+} from './api/inbox.api';
 import { CategoryPicker } from './components/CategoryPicker';
 import { InboxRow } from './components/InboxRow';
+import { InboxSheet } from './components/InboxSheet';
 import { useInboxItems } from './hooks/useInboxItems';
 import { isRecentlyDone } from './utils/age';
 
 export const InboxScreen: FC = () => {
   const [deleted, setDeleted] = useState<InboxItem | null>(null);
   const [moving, setMoving] = useState<InboxItem | null>(null);
+  const [opened, setOpened] = useState<InboxItem | null>(null);
   const [showDone, setShowDone] = useState(false);
 
   const { t } = useTranslation();
@@ -40,8 +47,11 @@ export const InboxScreen: FC = () => {
     setDeleted(item);
   };
 
+  const moveToToday = (item: InboxItem, category: Category) =>
+    void moveInboxItemToToday(item.id, item.text, category.id, today);
+
   const handlePick = (category: Category) => {
-    if (moving) void moveInboxItemToToday(moving.id, moving.text, category.id, today);
+    if (moving) moveToToday(moving, category);
     setMoving(null);
   };
 
@@ -55,13 +65,13 @@ export const InboxScreen: FC = () => {
           open.length > 0 && <Typography sx={{ color: 'text.secondary' }}>{open.length}</Typography>
         }
       />
-      <CaptureField />
       {open.length === 0 && <EmptyState title={t('inbox.empty')} />}
       {open.map((item) => (
         <InboxRow
           key={item.id}
           item={item}
           now={now}
+          onOpen={setOpened}
           onDelete={handleDelete}
           onToToday={setMoving}
         />
@@ -96,12 +106,24 @@ export const InboxScreen: FC = () => {
                 key={item.id}
                 item={item}
                 now={now}
+                onOpen={setOpened}
                 onDelete={handleDelete}
                 onToToday={setMoving}
               />
             ))}
           </Collapse>
         </>
+      )}
+      <Composer placeholder={t('inbox.capture')} onSubmit={(text) => void addInboxItem(text)} />
+      {opened && (
+        <InboxSheet
+          key={opened.id}
+          item={opened}
+          categories={categories}
+          onClose={() => setOpened(null)}
+          onDelete={handleDelete}
+          onToToday={moveToToday}
+        />
       )}
       <CategoryPicker
         open={moving !== null}
