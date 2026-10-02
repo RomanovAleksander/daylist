@@ -10,7 +10,7 @@ Task         { id, date, categoryId, text, done, doneAt?, recurring,
                carriedFrom?, carryCount, order, updatedAt, deleted? }
 TemplateItem { id, categoryId, text, order, updatedAt, deleted? }
 Day          { id /* = date */, date, builtAt, updatedAt }
-InboxItem    { id, text, createdAt, done, doneAt?, updatedAt, deleted? }
+InboxItem    { id, text, note?, createdAt, done, doneAt?, updatedAt, deleted? }
 Goal         { id, kind: 'dated' | 'global' | 'dream', title, description,
                startDate, deadline?, measure: 'steps' | 'number' | 'none',
                current?, target?, unit?, achievedAt?, order, updatedAt, deleted? }

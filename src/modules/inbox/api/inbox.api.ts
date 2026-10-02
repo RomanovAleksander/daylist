@@ -1,4 +1,4 @@
-import { db } from '@/db';
+import { db, type InboxItem } from '@/db';
 import { addTask } from '@/modules/day';
 import type { DateKey } from '@/utils/date';
 import { createId } from '@/utils/id';
@@ -13,8 +13,8 @@ export const setInboxItemDone = (id: string, done: boolean) => {
   return db.inboxItems.update(id, { done, doneAt: done ? now : undefined, updatedAt: now });
 };
 
-export const updateInboxItemText = (id: string, text: string) =>
-  db.inboxItems.update(id, { text, updatedAt: Date.now() });
+export const updateInboxItem = (id: string, changes: Pick<InboxItem, 'text' | 'note'>) =>
+  db.inboxItems.update(id, { ...changes, updatedAt: Date.now() });
 
 export const deleteInboxItem = (id: string) =>
   db.inboxItems.update(id, { deleted: true, updatedAt: Date.now() });

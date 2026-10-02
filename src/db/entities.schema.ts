@@ -45,6 +45,7 @@ export const daySchema = z.object({
 export const inboxItemSchema = z.object({
   ...syncedFields,
   text: z.string(),
+  note: z.string().optional(),
   createdAt: z.number(),
   done: z.boolean(),
   doneAt: z.number().optional(),

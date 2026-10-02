@@ -47,16 +47,35 @@ export const InboxRow: FC<Props> = ({ item, now, onOpen, onDelete, onToToday }) 
           aria-label={t('inbox.edit')}
           sx={{ flex: 1, minWidth: 0, justifyContent: 'flex-start', textAlign: 'left', py: 1.25 }}
         >
-          <Typography
-            component="span"
-            sx={{
-              overflowWrap: 'anywhere',
-              color: item.done ? 'text.disabled' : 'text.primary',
-              textDecoration: item.done ? 'line-through' : 'none',
-            }}
-          >
-            {item.text}
-          </Typography>
+          <Box component="span" sx={{ minWidth: 0 }}>
+            <Typography
+              component="span"
+              sx={{
+                display: 'block',
+                overflowWrap: 'anywhere',
+                color: item.done ? 'text.disabled' : 'text.primary',
+                textDecoration: item.done ? 'line-through' : 'none',
+              }}
+            >
+              {item.text}
+            </Typography>
+            {item.note && (
+              <Typography
+                component="span"
+                sx={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  color: 'text.secondary',
+                  fontSize: 13,
+                  whiteSpace: 'pre-line',
+                }}
+              >
+                {item.note}
+              </Typography>
+            )}
+          </Box>
         </ButtonBase>
         {!item.done && (
           <Typography
