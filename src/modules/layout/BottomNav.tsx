@@ -12,10 +12,10 @@ export const BottomNav: FC = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
 
-  // Активная вкладка выводится из URL: вложенные экраны (`/settings/template`) подсвечивают родителя.
+  // Активная вкладка выводится из URL: вложенные экраны подсвечивают свой раздел.
   const active =
-    navItems.find((item) => item.path !== PagesConfig.TODAY && pathname.startsWith(item.path))
-      ?.path ?? PagesConfig.TODAY;
+    navItems.find((item) => item.sections.some((section) => pathname.startsWith(section)))?.path ??
+    PagesConfig.TODAY;
 
   return (
     <Paper

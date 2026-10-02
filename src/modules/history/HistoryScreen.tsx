@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
+import { PagesConfig } from '@/config/pages.config';
 import { useToday } from '@/hooks/useToday';
 import { EmptyState } from '@/ui/EmptyState';
+import { ScreenHeader } from '@/ui/ScreenHeader';
 
 import { HistoryDay } from './components/HistoryDay';
 import { useAllCategories } from './hooks/useAllCategories';
@@ -40,9 +42,10 @@ export const HistoryScreen: FC = () => {
 
   return (
     <>
-      <Typography component="h1" sx={{ fontSize: 22, fontWeight: 600, mb: 1 }}>
-        {t('nav.history')}
-      </Typography>
+      <ScreenHeader
+        title={t('nav.history')}
+        back={{ to: PagesConfig.MORE, label: t('common.back') }}
+      />
       {days.length === 0 && <EmptyState title={t('history.empty')} />}
       {days.map((day) => (
         <HistoryDay key={day.date} day={day} categories={categories} />
