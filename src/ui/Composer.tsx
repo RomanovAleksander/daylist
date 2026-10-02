@@ -2,6 +2,8 @@ import { useState, type FC, type KeyboardEvent, type ReactNode, type Ref } from 
 
 import { Box, InputBase } from '@mui/material';
 
+import { useKeyboardOpen } from '@/hooks/useKeyboardOpen';
+
 interface Props {
   placeholder: string;
   onSubmit: (text: string) => void;
@@ -21,6 +23,8 @@ const COMPOSER_HEIGHT = 64;
 export const Composer: FC<Props> = ({ placeholder, onSubmit, start, inputRef }) => {
   const [value, setValue] = useState('');
 
+  const keyboardOpen = useKeyboardOpen();
+
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key !== 'Enter' || event.nativeEvent.isComposing) return;
     event.preventDefault();
@@ -37,7 +41,8 @@ export const Composer: FC<Props> = ({ placeholder, onSubmit, start, inputRef }) 
         sx={{
           position: 'fixed',
           insetInline: 0,
-          bottom: `calc(env(safe-area-inset-bottom, 0px) + ${NAV_HEIGHT}px)`,
+          // С открытой клавиатурой навигация скрыта, и поле садится прямо на клавиатуру.
+          bottom: keyboardOpen ? 0 : `calc(env(safe-area-inset-bottom, 0px) + ${NAV_HEIGHT}px)`,
           bgcolor: 'background.default',
           zIndex: 1,
         }}

@@ -5,6 +5,7 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 
 import { PagesConfig } from '@/config/pages.config';
+import { useKeyboardOpen } from '@/hooks/useKeyboardOpen';
 
 import { navItems } from './nav.config';
 
@@ -12,10 +13,14 @@ export const BottomNav: FC = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
 
+  const keyboardOpen = useKeyboardOpen();
+
   // Активная вкладка выводится из URL: вложенные экраны подсвечивают свой раздел.
   const active =
     navItems.find((item) => item.sections.some((section) => pathname.startsWith(section)))?.path ??
     PagesConfig.TODAY;
+
+  if (keyboardOpen) return null;
 
   return (
     <Paper
