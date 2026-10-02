@@ -32,7 +32,8 @@
     "toTemplate": "У шаблон",
     "keep": "Залишити",
     "makeRecurring": "Зробити щоденною",
-    "carriedNotice_other": "Перенесено {{count}} задачі з минулого дня"
+    "carriedNotice_other": "Перенесено {{count}} задачі з минулого дня",
+    "addCategory": "+ категорія"
   },
   "common": {
     "back": "Назад",
