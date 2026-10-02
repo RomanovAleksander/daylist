@@ -142,7 +142,6 @@ export const CategorySheet: FC<Props> = ({ open, category, onClose, onCreated, o
           disableElevation
           size="large"
           onClick={() => void handleCreate()}
-          sx={{ borderRadius: 3, fontWeight: 700 }}
         >
           {t('settings.create')}
         </Button>

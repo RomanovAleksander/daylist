@@ -19,8 +19,6 @@ interface Props {
   onNewDate: () => void;
 }
 
-const bigButtonSx = { borderRadius: 3.5, fontWeight: 700, py: 1.5 } as const;
-
 /** Центр экрана цели: кольцо, одна строка контекста и одна главная кнопка. */
 export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewDate }) => {
   const { t } = useTranslation();
@@ -48,14 +46,7 @@ export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewD
     if (goal.achievedAt || goal.measure === 'steps') return null;
     if (goal.measure === 'number') {
       return (
-        <Button
-          fullWidth
-          variant="contained"
-          disableElevation
-          size="large"
-          onClick={onAddAmount}
-          sx={bigButtonSx}
-        >
+        <Button fullWidth variant="contained" disableElevation size="large" onClick={onAddAmount}>
           {t('goals.card.addAmountButton')}
         </Button>
       );
@@ -67,7 +58,6 @@ export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewD
         disableElevation
         size="large"
         onClick={() => void setGoalAchieved(goal.id, true)}
-        sx={bigButtonSx}
       >
         {goal.kind === 'dream' ? t('goals.card.dreamCame') : t('goals.card.markAchieved')}
       </Button>
@@ -92,7 +82,6 @@ export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewD
             variant="contained"
             disableElevation
             onClick={() => void setGoalAchieved(goal.id, true)}
-            sx={{ borderRadius: 3 }}
           >
             {t('goals.achieve')}
           </Button>
