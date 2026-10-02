@@ -49,6 +49,8 @@ export const inboxItemSchema = z.object({
   text: z.string(),
   note: z.string().optional(),
   createdAt: z.number(),
+  /** Ручной порядок; пока его не трогали, ключ сортировки — createdAt (новые сверху). */
+  order: z.number().optional(),
   done: z.boolean(),
   doneAt: z.number().optional(),
 });

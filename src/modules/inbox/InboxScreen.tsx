@@ -11,12 +11,14 @@ import { Card } from '@/ui/Card';
 import { Composer } from '@/ui/Composer';
 import { EmptyState } from '@/ui/EmptyState';
 import { ScreenHeader } from '@/ui/ScreenHeader';
+import { SortableItem, SortableList } from '@/ui/SortableList';
 import { UndoSnackbar } from '@/ui/UndoSnackbar';
 
 import {
   addInboxItem,
   deleteInboxItem,
   moveInboxItemToToday,
+  reorderInboxItems,
   restoreInboxItem,
 } from './api/inbox.api';
 import { CategoryPicker } from './components/CategoryPicker';
@@ -69,16 +71,22 @@ export const InboxScreen: FC = () => {
       {open.length === 0 && <EmptyState title={t('inbox.empty')} />}
       {open.length > 0 && (
         <Card>
-          {open.map((item) => (
-            <InboxRow
-              key={item.id}
-              item={item}
-              now={now}
-              onOpen={setOpened}
-              onDelete={handleDelete}
-              onToToday={setMoving}
-            />
-          ))}
+          <SortableList
+            ids={open.map((item) => item.id)}
+            onReorder={(ids) => void reorderInboxItems(open, ids)}
+          >
+            {open.map((item) => (
+              <SortableItem key={item.id} id={item.id}>
+                <InboxRow
+                  item={item}
+                  now={now}
+                  onOpen={setOpened}
+                  onDelete={handleDelete}
+                  onToToday={setMoving}
+                />
+              </SortableItem>
+            ))}
+          </SortableList>
         </Card>
       )}
       {done.length > 0 && (
