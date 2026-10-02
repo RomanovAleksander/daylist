@@ -7,5 +7,19 @@
   },
   "stub": {
     "soon": "Скоро тут щось буде"
+  },
+  "day": {
+    "progress": "{{done}} з {{total}}",
+    "closed": "День закрито ✓",
+    "addTask": "+ задача",
+    "newTask": "Нова задача",
+    "editTask": "Редагувати задачу",
+    "toggleTask": "Відмітити «{{text}}»",
+    "deleteTask": "Видалити задачу",
+    "deleted": "Задачу видалено",
+    "undo": "Скасувати",
+    "swipeDelete": "Видалити",
+    "firstCategory": "Додай першу категорію",
+    "categoryName": "Назва категорії"
   }
 }
