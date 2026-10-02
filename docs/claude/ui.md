@@ -37,7 +37,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 ## Goals screen
 
 - One list of «jars», no sections: dated goals by deadline, then global goals, then dreams; collapsed «Досягнуто · N» below. Each jar: `ProgressRing` (steps `1/2`, percent, time elapsed for a dated goal without a measure, `→` global, `✦` dream), title, subtitle (amount, next step, deadline, «без дати», «мрія»), days left on the right (`−N дн.` when overdue).
-- «+ Ціль» in the header opens a three-step wizard, one question per screen: name + goal/dream (a dream is created right away) → date (end of month / end of year / custom / no date → global) → measure (steps / amount with target and unit / just the countdown).
+- «+ Ціль» in the header opens one sheet: name, «Коли?» (end of month / end of year / custom / no date → global / ✦ dream) and, unless it is a dream, «Як міряти прогрес?» (just the time, default / steps / amount with target and unit). The measure stays an explicit choice; it can be changed later in «⋯».
 - Goal screen: big ring (amount and target for number goals), one context line (days left, ≈ per month), one primary button («+ Додати суму» → amount sheet, «Досягнуто ✓», «Збулось ✓»; none for step goals — the steps list is the action), overdue → three actions, steps list, «Що робити» description. Type, deadline, measure, number fields, reopen and delete live in the «⋯» sheet.
 
 ## Other screens
@@ -58,4 +58,4 @@ Reminders, notifications and app badges — reliable PWA push needs a server, an
 
 ## i18n
 
-One dictionary `src/locales/uk.json`. Every user-facing string goes through `t()`. Keys are grouped by module (`day.newTaskIn`, `goals.wizard.next`). Remove keys that lose their last usage. Plurals via i18next plural suffixes (`_one`, `_few`, `_many`).
+One dictionary `src/locales/uk.json`. Every user-facing string goes through `t()`. Keys are grouped by module (`day.newTaskIn`, `goals.create.submit`). Remove keys that lose their last usage. Plurals via i18next plural suffixes (`_one`, `_few`, `_many`).

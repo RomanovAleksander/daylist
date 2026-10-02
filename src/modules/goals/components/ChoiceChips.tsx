@@ -20,11 +20,11 @@ export const ChoiceChips = <T extends string>({ label, value, options, onChange 
           onClick={() => onChange(option.value)}
           sx={{
             px: 2,
-            py: 1.25,
+            minHeight: 44,
             borderRadius: 3,
             fontSize: 15,
             fontWeight: selected ? 700 : 500,
-            bgcolor: selected ? 'primary.main' : 'background.paper',
+            bgcolor: selected ? 'primary.main' : 'background.default',
             color: selected ? 'primary.contrastText' : 'text.primary',
           }}
         >

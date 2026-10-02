@@ -3,27 +3,24 @@ import { useState } from 'react';
 import type { GoalMeasure } from '@/db';
 import { endOfMonth, endOfYear, type DateKey } from '@/utils/date';
 
-export type DateChoice = 'month' | 'year' | 'custom' | 'none';
-export type KindChoice = 'goal' | 'dream';
+export type DateChoice = 'month' | 'year' | 'custom' | 'none' | 'dream';
 
 export interface GoalDraft {
   title: string;
-  kind: KindChoice;
   dateChoice: DateChoice | null;
   customDate: DateKey;
-  measure: GoalMeasure | null;
+  measure: GoalMeasure;
   target: string;
   unit: string;
 }
 
-/** Черновик цели для мастера: ответы на шаги и производные дедлайн и тип. */
+/** Черновик новой цели: выбранные варианты и производные от них дедлайн и готовность. */
 export const useGoalDraft = (today: DateKey) => {
   const [draft, setDraft] = useState<GoalDraft>({
     title: '',
-    kind: 'goal',
     dateChoice: null,
     customDate: '',
-    measure: null,
+    measure: 'none',
     target: '',
     unit: '',
   });
@@ -36,7 +33,16 @@ export const useGoalDraft = (today: DateKey) => {
     year: endOfYear(today),
     custom: draft.customDate || undefined,
     none: undefined,
+    dream: undefined,
   }[draft.dateChoice ?? 'none'];
 
-  return { draft, update, deadline };
+  const target = Number(draft.target.replace(',', '.'));
+
+  const ready =
+    draft.title.trim() !== '' &&
+    draft.dateChoice !== null &&
+    (draft.dateChoice !== 'custom' || !!draft.customDate) &&
+    (draft.dateChoice === 'dream' || draft.measure !== 'number' || target > 0);
+
+  return { draft, update, deadline, target, ready };
 };

@@ -2,7 +2,6 @@ export const PagesConfig = {
   TODAY: '/',
   INBOX: '/inbox',
   GOALS: '/goals',
-  GOAL_NEW: '/goals/new',
   GOAL: '/goals/:id',
   MORE: '/more',
   HISTORY: '/history',

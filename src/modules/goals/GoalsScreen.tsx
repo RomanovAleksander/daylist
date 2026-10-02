@@ -1,20 +1,21 @@
-import { useMemo, type FC } from 'react';
+import { useMemo, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
 
-import { PagesConfig } from '@/config/pages.config';
 import { useToday } from '@/hooks/useToday';
 import { ScreenHeader } from '@/ui/ScreenHeader';
 
 import { AchievedSection } from './components/AchievedSection';
 import { JarCard } from './components/JarCard';
+import { NewGoalSheet } from './components/NewGoalSheet';
 import { useGoals } from './hooks/useGoals';
 import { compareGoals } from './utils/progress';
 
 export const GoalsScreen: FC = () => {
+  const [creating, setCreating] = useState(false);
+
   const { t } = useTranslation();
 
   const today = useToday();
@@ -38,8 +39,7 @@ export const GoalsScreen: FC = () => {
         title={t('nav.goals')}
         action={
           <Button
-            component={RouterLink}
-            to={PagesConfig.GOAL_NEW}
+            onClick={() => setCreating(true)}
             variant="contained"
             disableElevation
             startIcon={<AddIcon />}
@@ -62,6 +62,7 @@ export const GoalsScreen: FC = () => {
         />
       ))}
       <AchievedSection goals={achieved} />
+      {creating && <NewGoalSheet onClose={() => setCreating(false)} />}
     </>
   );
 };
