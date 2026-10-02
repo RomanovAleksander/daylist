@@ -15,6 +15,10 @@ Simple like a banking app: one primary action per screen, the key number large, 
 - Done tasks are struck through and sink to the bottom of their card. New tasks go to the end of the undone ones; no drag-and-drop for tasks.
 - Empty state (no categories): `Додай першу категорію` with an inline input; the composer appears once a category exists.
 
+## On-screen keyboard
+
+The viewport uses `interactive-widget=resizes-content`, so the Android keyboard shrinks the layout and anything pinned to the bottom (composer, sheets, buttons) stays above it. While `useKeyboardOpen` is true the bottom navigation is hidden and the composer sits right on the keyboard. Never pin a submit button with `100vh`/`dvh` maths — put it in a sheet or right after the field.
+
 ## Loading
 
 Only the today screen is in the entry chunk; history, stats (with `@mui/x-charts`), settings and template are lazy routes.
