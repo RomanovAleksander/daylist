@@ -3,4 +3,5 @@ export const PagesConfig = {
   HISTORY: '/history',
   STATS: '/stats',
   SETTINGS: '/settings',
+  TEMPLATE: '/settings/template',
 } as const;

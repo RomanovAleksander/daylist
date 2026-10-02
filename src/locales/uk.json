@@ -20,6 +20,47 @@
     "undo": "Скасувати",
     "swipeDelete": "Видалити",
     "firstCategory": "Додай першу категорію",
-    "categoryName": "Назва категорії"
+    "categoryName": "Назва категорії",
+    "carriedNotice_one": "Перенесено {{count}} задачу з учора",
+    "carriedNotice_few": "Перенесено {{count}} задачі з учора",
+    "carriedNotice_many": "Перенесено {{count}} задач з учора",
+    "carryDays": "↻ {{count}} дн.",
+    "staleActions": "Задача висить {{count}} дн.",
+    "toTemplate": "У шаблон",
+    "keep": "Залишити",
+    "makeRecurring": "Зробити щоденною",
+    "carriedNotice_other": "Перенесено {{count}} задачі з учора"
+  },
+  "common": {
+    "back": "Назад",
+    "cancel": "Скасувати",
+    "delete": "Видалити"
+  },
+  "template": {
+    "title": "Шаблон",
+    "hint": "Ці задачі з’являються щодня. Нова задача додається і в сьогодні, видалена зникає з завтра.",
+    "add": "+ щоденна задача",
+    "edit": "Редагувати щоденну задачу",
+    "delete": "Видалити щоденну задачу",
+    "noCategories": "Спершу додай категорію"
+  },
+  "history": {
+    "empty": "Минулих днів ще немає",
+    "progress": "{{done}}/{{total}} · {{percent}}%",
+    "noTasks": "Без задач",
+    "carried": "→ перенесено",
+    "expand": "Розгорнути день",
+    "collapse": "Згорнути день"
+  },
+  "settings": {
+    "categories": "Категорії",
+    "addCategory": "+ категорія",
+    "categoryName": "Назва категорії",
+    "renameCategory": "Перейменувати категорію",
+    "deleteCategory": "Видалити категорію",
+    "dragCategory": "Перетягнути категорію",
+    "deleteCategoryTitle": "Видалити «{{name}}»?",
+    "deleteCategoryText": "Сьогоднішні задачі й шаблон цієї категорії зникнуть. Історія минулих днів залишиться.",
+    "template": "Шаблон щоденних задач"
   }
 }
