@@ -13,7 +13,14 @@ export const theme = createTheme({
   },
   shape: { borderRadius: 10 },
   components: {
+    // index.html красит html в тёмный до загрузки JS; дальше фон должен следовать теме.
+    MuiCssBaseline: {
+      styleOverrides: (theme) => ({
+        html: { backgroundColor: theme.vars?.palette.background.default },
+      }),
+    },
     MuiButton: { styleOverrides: { root: { textTransform: 'none' } } },
+    MuiToggleButton: { styleOverrides: { root: { textTransform: 'none' } } },
     // Инвертированный снекбар MUI в тёмной схеме становится белым и слепит; держим его тёмным.
     MuiSnackbarContent: {
       styleOverrides: {
