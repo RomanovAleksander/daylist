@@ -4,10 +4,12 @@ import type { Goal, GoalStep } from '@/db';
 
 import {
   compareDated,
+  compareGoals,
   formatAmount,
   goalProgress,
   isOverdue,
   neededPerMonth,
+  parseAmount,
   timeRatio,
 } from './progress';
 
@@ -95,6 +97,27 @@ describe('compareDated', () => {
       goal({ id: 'soon', deadline: '2026-11-16' }),
     ];
     expect(goals.sort(compareDated).map((g) => g.id)).toEqual(['soon', 'late', 'none']);
+  });
+});
+
+describe('compareGoals', () => {
+  it('lists dated goals by deadline, then global goals, then dreams', () => {
+    const goals = [
+      goal({ id: 'dream', kind: 'dream', deadline: undefined }),
+      goal({ id: 'global', kind: 'global', deadline: undefined }),
+      goal({ id: 'late', deadline: '2026-12-20' }),
+      goal({ id: 'soon', deadline: '2026-11-16' }),
+    ];
+    expect(goals.sort(compareGoals).map((g) => g.id)).toEqual(['soon', 'late', 'global', 'dream']);
+  });
+});
+
+describe('parseAmount', () => {
+  it('reads grouped and comma-decimal numbers', () => {
+    expect(parseAmount('12 000')).toBe(12000);
+    expect(parseAmount('4315,5')).toBe(4315.5);
+    expect(parseAmount('')).toBeUndefined();
+    expect(parseAmount('abc')).toBeUndefined();
   });
 });
 

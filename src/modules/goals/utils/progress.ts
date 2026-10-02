@@ -60,3 +60,20 @@ export const formatAmount = (value: number, unit = '') => {
   if (!unit) return number;
   return PREFIX_UNITS.has(unit) ? `${unit}${number}` : `${number} ${unit}`;
 };
+
+export const nextStep = (steps: GoalStep[]) => steps.find((step) => !step.deleted && !step.done);
+
+export type GoalOrderGroup = 0 | 1 | 2;
+
+const KIND_ORDER: Record<Goal['kind'], GoalOrderGroup> = { dated: 0, global: 1, dream: 2 };
+
+/** Один список без секций: сначала с дедлайном, потом глобальные, в конце мечты. */
+export const compareGoals = (a: Goal, b: Goal) =>
+  KIND_ORDER[a.kind] - KIND_ORDER[b.kind] ||
+  (a.kind === 'dated' ? compareDated(a, b) : a.order - b.order);
+
+/** «4 315», «4315,5», «12 000» → число; пустое или мусор — `undefined`. */
+export const parseAmount = (value: string): number | undefined => {
+  const number = Number(value.replace(',', '.').replace(/\s/g, ''));
+  return value.trim() === '' || Number.isNaN(number) ? undefined : number;
+};
