@@ -47,7 +47,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 ## Other screens
 
 - **History** — feed of past days, newest first, loading backwards on scroll; each day shows `7/9 · 78%` and expands into `DayView` (read-only, retroactive tick allowed).
-- **Stats** — today `X/Y`; week bars (`@mui/x-charts`) with days ≥ 80% in accent; per category "closed fully N of M days" for week/month; streak of days ≥ 80% (a missed day is assembled with everything undone, so it breaks the streak); stale tasks list.
+- **Stats** — tiles «Сьогодні X/Y» and the streak of days ≥ 80% (a missed day is assembled with everything undone, so it breaks the streak); a Тиждень / Місяць / Рік switch over rolling 7 / 30 / 365 days drives the big `%` (task-weighted) with `↑/↓ N%` against the previous window of the same length, closed tasks and good days, a bar chart (days ≥ 80% in accent; the year shows 12 calendar months, all accent) and categories closed fully with bars; then a heatmap of the last 18 weeks (Monday rows, 5 levels of the accent, grey = no tasks) and the stale tasks list.
 - **Settings** — one scrolling screen: categories (also manageable from the today screen; here rename inline and reorder by drag via `@dnd-kit`), template link, Dropbox (status, last sync time, connect/disconnect), appearance (theme dark / light / system via MUI `useColorScheme`, today layout cards / list, day start hour 00:00–06:00), data (export/import JSON).
 
 ## Out of scope
