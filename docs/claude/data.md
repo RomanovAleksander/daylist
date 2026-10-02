@@ -50,3 +50,7 @@ Read-only in history, except ticking a task done retroactively. Ticking a carrie
 ## Category deletion
 
 Tombstones the category, its template items and its tasks of today. Tasks of past days stay; history keeps the category name via the tombstoned row.
+
+## Known pitfalls
+
+- Dexie's optimistic `liveQuery` cache is disabled (`cache: 'disabled'`): it dropped rows written by another transaction from cached `where()` results. Do not re-enable it without an end-to-end check of the today screen.

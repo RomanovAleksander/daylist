@@ -9,7 +9,9 @@ class DaylistDb extends Dexie {
   days!: EntityTable<Day, 'id'>;
 
   constructor() {
-    super('daylist');
+    // Оптимистичный кеш liveQuery в Dexie 4 терял из выборки по `date` задачу, добавленную в
+    // другой транзакции, после следующей записи в тот же день. Данных у нас мало — читаем из базы.
+    super('daylist', { cache: 'disabled' });
     this.version(1).stores({
       categories: 'id',
       tasks: 'id, date, categoryId',
