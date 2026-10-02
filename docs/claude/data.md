@@ -45,7 +45,7 @@ Runs on start, on `visibilitychange`/`focus` and on the local midnight (day star
 
 ## Past days
 
-Read-only in history, except ticking a task done retroactively.
+Read-only in history, except ticking a task done retroactively. Ticking a carried task done in the past also tombstones its undone copies on later days (same `carriedFrom` root) — it was finished, so it must stop hanging.
 
 ## Category deletion
 
