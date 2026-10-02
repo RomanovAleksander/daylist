@@ -2,9 +2,10 @@ import { useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, ButtonBase, Collapse, IconButton, Paper, Typography } from '@mui/material';
+import { Box, ButtonBase, Collapse, IconButton, Typography } from '@mui/material';
 
 import type { Category, Task } from '@/db';
+import { Card } from '@/ui/Card';
 
 import { TaskRow } from './TaskRow';
 import type { CategoryGroup } from '../utils/groupTasks';
@@ -50,19 +51,7 @@ export const CategoryCard: FC<Props> = ({ group, onOpenCategory, onOpenTask, onD
   const open = !closed || expanded;
 
   return (
-    <Paper
-      component="section"
-      aria-label={category.name}
-      elevation={0}
-      sx={{
-        borderRadius: 5,
-        overflow: 'hidden',
-        px: 1.75,
-        pt: 1,
-        pb: open && tasks.length ? 0.5 : 1,
-        mb: 1.25,
-      }}
-    >
+    <Card label={category.name}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <ButtonBase
           onClick={() => onOpenCategory(category)}
@@ -111,6 +100,6 @@ export const CategoryCard: FC<Props> = ({ group, onOpenCategory, onOpenTask, onD
           <TaskRow key={task.id} task={task} onOpen={onOpenTask} onDelete={onDelete} />
         ))}
       </Collapse>
-    </Paper>
+    </Card>
   );
 };
