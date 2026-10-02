@@ -27,6 +27,11 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    // MUI + React + Dexie на главном экране дают ~850 kB (~270 kB gzip). Для PWA это разовая
+    // загрузка в precache, поэтому порог поднят, а вторичные экраны грузятся лениво.
+    chunkSizeWarningLimit: 1000,
+  },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
