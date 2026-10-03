@@ -9,6 +9,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '
 
 import { PagesConfig } from '@/config/pages.config';
 import type { Goal } from '@/db';
+import { closeOverlaysThen, useBackToClose } from '@/hooks/useBackToClose';
 import { BottomSheet } from '@/ui/BottomSheet';
 import { SheetAction } from '@/ui/SheetAction';
 
@@ -28,10 +29,11 @@ export const GoalOptionsSheet: FC<Props> = ({ goal, onClose }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  useBackToClose(confirmDelete, () => setConfirmDelete(false));
+
   const handleDelete = () => {
-    setConfirmDelete(false);
     void deleteGoal(goal.id);
-    navigate(PagesConfig.GOALS, { replace: true });
+    closeOverlaysThen(() => navigate(PagesConfig.GOALS, { replace: true }));
   };
 
   return (

@@ -6,6 +6,7 @@ import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlin
 import { Box, InputBase, Typography } from '@mui/material';
 
 import type { Category, InboxItem } from '@/db';
+import { useBackToClose } from '@/hooks/useBackToClose';
 import { BottomSheet } from '@/ui/BottomSheet';
 import { SheetAction } from '@/ui/SheetAction';
 
@@ -25,6 +26,9 @@ export const InboxSheet: FC<Props> = ({ item, categories, onClose, onDelete, onT
   const [pickCategory, setPickCategory] = useState(false);
 
   const { t } = useTranslation();
+
+  // «Назад» из списка категорий возвращает к действиям, а не закрывает шторку.
+  useBackToClose(pickCategory, () => setPickCategory(false));
 
   // Текст и описание сохраняем перед любым действием: перенос в день берёт исправленную формулировку.
   const run = (action: (current: InboxItem) => void) => {

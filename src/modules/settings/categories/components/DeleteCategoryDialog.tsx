@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 import type { Category } from '@/db';
+import { useBackToClose } from '@/hooks/useBackToClose';
 
 interface Props {
   category: Category | null;
@@ -13,6 +14,8 @@ interface Props {
 
 export const DeleteCategoryDialog: FC<Props> = ({ category, onConfirm, onClose }) => {
   const { t } = useTranslation();
+
+  useBackToClose(category !== null, onClose);
 
   return (
     <Dialog open={category !== null} onClose={onClose}>

@@ -6,6 +6,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Button, Divider, ListItemIcon, Menu, MenuItem } from '@mui/material';
 
 import type { Category } from '@/db';
+import { useBackToClose } from '@/hooks/useBackToClose';
 
 interface Props {
   categories: Category[];
@@ -19,6 +20,8 @@ export const CategoryChip: FC<Props> = ({ categories, selected, onSelect, onCrea
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
   const { t } = useTranslation();
+
+  useBackToClose(anchor !== null, () => setAnchor(null));
 
   const pick = (action: () => void) => {
     setAnchor(null);

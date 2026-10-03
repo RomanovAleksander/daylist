@@ -23,6 +23,10 @@ Two layouts, chosen per device in Settings → «Вигляд «Сьогодні
 
 Every list reorders the same way via `ui/SortableList` + `SortableItem` (or `useSortableRow` when only a header drags or a row edits inline): a long press (300 ms) on touch, a 6px drag with the mouse. A tap and a horizontal swipe keep their meaning; the click right after a drop is swallowed. No drag handles.
 
+## Back button
+
+The Android back button closes the topmost overlay instead of leaving the app. Every overlay — `BottomSheet`, menu, dialog, `Select`, an in-sheet sub-step such as the category list — calls `useBackToClose(open, onClose)`, which keeps one history entry per open overlay. An overlay that navigates to another screen does it through `closeOverlaysThen(() => navigate(…))`, so back from the new screen never lands under a closed sheet.
+
 ## On-screen keyboard
 
 The viewport uses `interactive-widget=resizes-content`, so the Android keyboard shrinks the layout and anything pinned to the bottom (composer, sheets, buttons) stays above it. While `useKeyboardOpen` is true the bottom navigation is hidden and the composer sits right on the keyboard. Never pin a submit button with `100vh`/`dvh` maths — put it in a sheet or right after the field.
