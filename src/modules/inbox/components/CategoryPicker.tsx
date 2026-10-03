@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Dialog, DialogTitle, List, ListItemButton, Typography } from '@mui/material';
 
 import type { Category } from '@/db';
+import { useBackToClose } from '@/hooks/useBackToClose';
 
 interface Props {
   open: boolean;
@@ -14,6 +15,8 @@ interface Props {
 
 export const CategoryPicker: FC<Props> = ({ open, categories, onPick, onClose }) => {
   const { t } = useTranslation();
+
+  useBackToClose(open, onClose);
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">

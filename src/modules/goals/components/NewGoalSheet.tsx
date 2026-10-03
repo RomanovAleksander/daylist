@@ -6,6 +6,7 @@ import { Box, Button, InputBase, TextField, Typography } from '@mui/material';
 
 import { goalPath } from '@/config/pages.config';
 import type { GoalMeasure } from '@/db';
+import { closeOverlaysThen } from '@/hooks/useBackToClose';
 import { useToday } from '@/hooks/useToday';
 import { BottomSheet } from '@/ui/BottomSheet';
 
@@ -46,7 +47,7 @@ export const NewGoalSheet: FC<Props> = ({ onClose }) => {
             unit: draft.unit.trim() || undefined,
           }),
         });
-    navigate(goalPath(id));
+    closeOverlaysThen(() => navigate(goalPath(id)));
   };
 
   return (

@@ -2,6 +2,8 @@ import { useCallback, type FC, type ReactNode, type RefObject } from 'react';
 
 import { Box, Drawer, Typography } from '@mui/material';
 
+import { useBackToClose } from '@/hooks/useBackToClose';
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -21,6 +23,8 @@ export const BottomSheet: FC<Props> = ({ open, onClose, title, initialFocusRef, 
     },
     [initialFocusRef]
   );
+
+  useBackToClose(open, onClose);
 
   return (
     <Drawer

@@ -9,6 +9,7 @@ import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import { Box, InputBase } from '@mui/material';
 
 import type { Category, Task } from '@/db';
+import { useBackToClose } from '@/hooks/useBackToClose';
 import { promoteTaskToTemplate, stopTaskRecurring } from '@/modules/settings/template';
 import { BottomSheet } from '@/ui/BottomSheet';
 import { SheetAction } from '@/ui/SheetAction';
@@ -28,6 +29,9 @@ export const TaskSheet: FC<Props> = ({ task, categories, onClose, onDelete }) =>
   const [pickCategory, setPickCategory] = useState(false);
 
   const { t } = useTranslation();
+
+  // «Назад» из списка категорий возвращает к действиям, а не закрывает шторку.
+  useBackToClose(pickCategory, () => setPickCategory(false));
 
   // Текст сохраняем при закрытии шторки и перед любым действием, чтобы правка не потерялась.
   const saveText = () => {

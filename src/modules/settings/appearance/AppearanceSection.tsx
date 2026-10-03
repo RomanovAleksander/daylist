@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -11,6 +11,7 @@ import {
   useColorScheme,
 } from '@mui/material';
 
+import { useBackToClose } from '@/hooks/useBackToClose';
 import { useUIStore, type TodayLayout } from '@/store/ui.store';
 import { SettingsSection } from '@/ui/SettingsSection';
 
@@ -19,6 +20,8 @@ type Mode = 'dark' | 'light' | 'system';
 const DAY_START_HOURS = [0, 1, 2, 3, 4, 5, 6];
 
 export const AppearanceSection: FC = () => {
+  const [hourMenuOpen, setHourMenuOpen] = useState(false);
+
   const { t } = useTranslation();
 
   const { mode, setMode } = useColorScheme();
@@ -27,6 +30,8 @@ export const AppearanceSection: FC = () => {
   const setDayStartHour = useUIStore((s) => s.setDayStartHour);
   const todayLayout = useUIStore((s) => s.todayLayout);
   const setTodayLayout = useUIStore((s) => s.setTodayLayout);
+
+  useBackToClose(hourMenuOpen, () => setHourMenuOpen(false));
 
   return (
     <SettingsSection title={t('settings.appearance')}>
@@ -62,6 +67,9 @@ export const AppearanceSection: FC = () => {
         <Typography id="day-start-label">{t('settings.dayStart')}</Typography>
         <Select
           size="small"
+          open={hourMenuOpen}
+          onOpen={() => setHourMenuOpen(true)}
+          onClose={() => setHourMenuOpen(false)}
           value={dayStartHour}
           onChange={(event) => setDayStartHour(Number(event.target.value))}
           slotProps={{ input: { 'aria-labelledby': 'day-start-label' } }}
