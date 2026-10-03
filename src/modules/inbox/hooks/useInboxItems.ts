@@ -14,7 +14,7 @@ export const useInboxItems = (): InboxData | undefined =>
   useLiveQuery(async () => {
     const items = await db.inboxItems.toArray();
     return {
-      items: items.filter((item) => !item.deleted).sort((a, b) => inboxKey(b) - inboxKey(a)),
+      items: items.filter((item) => !item.deleted).sort((a, b) => inboxKey(a) - inboxKey(b)),
       now: Date.now(),
     };
   }, []);

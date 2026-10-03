@@ -15,15 +15,4 @@ describe('reorderKeys', () => {
       ['b', 9],
     ]);
   });
-
-  it('keeps a newest-first list descending', () => {
-    const keys = new Map([
-      ['old', 100],
-      ['new', 300],
-    ]);
-    expect([...reorderKeys(['old', 'new'], keys, true)]).toEqual([
-      ['old', 300],
-      ['new', 100],
-    ]);
-  });
 });

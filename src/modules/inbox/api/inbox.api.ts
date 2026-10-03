@@ -20,7 +20,7 @@ export const updateInboxItem = (id: string, changes: Pick<InboxItem, 'text' | 'n
   db.inboxItems.update(id, { ...changes, updatedAt: Date.now() });
 
 export const reorderInboxItems = (items: InboxItem[], ids: string[]) => {
-  const keys = reorderKeys(ids, new Map(items.map((item) => [item.id, inboxKey(item)])), true);
+  const keys = reorderKeys(ids, new Map(items.map((item) => [item.id, inboxKey(item)])));
   const updatedAt = Date.now();
   return db.inboxItems.bulkUpdate(
     [...keys].map(([id, order]) => ({ key: id, changes: { order, updatedAt } }))
