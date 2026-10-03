@@ -1,8 +1,8 @@
-import { useState, type FC } from 'react';
+import { useEffect, useRef, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ButtonBase, Collapse, Typography } from '@mui/material';
+import { Box, ButtonBase, Collapse, Typography } from '@mui/material';
 
 import type { Category, InboxItem } from '@/db';
 import { useToday } from '@/hooks/useToday';
@@ -28,6 +28,8 @@ import { useInboxItems } from './hooks/useInboxItems';
 import { isRecentlyDone } from './utils/age';
 
 export const InboxScreen: FC = () => {
+  const listEnd = useRef<HTMLDivElement>(null);
+  const added = useRef(false);
   const [deleted, setDeleted] = useState<InboxItem | null>(null);
   const [moving, setMoving] = useState<InboxItem | null>(null);
   const [opened, setOpened] = useState<InboxItem | null>(null);
@@ -44,6 +46,18 @@ export const InboxScreen: FC = () => {
   const done = (inbox?.items ?? [])
     .filter((item) => item.done && isRecentlyDone(item.doneAt, now))
     .sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0));
+
+  // Новая запись встаёт в конец списка, над полем ввода: докручиваем к ней, как в мессенджере.
+  useEffect(() => {
+    if (!added.current) return;
+    added.current = false;
+    listEnd.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }, [open.length]);
+
+  const handleAdd = (text: string) => {
+    added.current = true;
+    void addInboxItem(text);
+  };
 
   const handleDelete = (item: InboxItem) => {
     void deleteInboxItem(item.id);
@@ -89,6 +103,8 @@ export const InboxScreen: FC = () => {
           </SortableList>
         </Card>
       )}
+      {/* Отступ снизу — высота поля ввода и навигации, чтобы новая запись не пряталась под ними. */}
+      <Box ref={listEnd} aria-hidden sx={{ scrollMarginBottom: 140 }} />
       {done.length > 0 && (
         <>
           <ButtonBase
@@ -133,7 +149,7 @@ export const InboxScreen: FC = () => {
       <Composer
         placeholder={t('inbox.capture')}
         submitLabel={t('common.add')}
-        onSubmit={(text) => void addInboxItem(text)}
+        onSubmit={handleAdd}
       />
       {opened && (
         <InboxSheet

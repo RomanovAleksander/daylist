@@ -43,7 +43,7 @@ Bottom navigation with four tabs: Сьогодні / Вхідні / Цілі / �
 
 - The same bottom `Composer` («Що спало на думку?»): Enter adds and keeps focus. No reminder on the today screen.
 - Rows: checkbox, text with up to two grey lines of its description below, age on the right (`щойно`, `3 дн.`, `2 тиж.`, `3 міс.`). Tap → sheet: edit text, «Опис» (multiline, saved on close), «Перенести в сьогодні» with a category list, delete. Day tasks have no description, so moving to today keeps only the text.
-- Swipe left deletes (undo snackbar), swipe right opens the category picker and moves the task to today. Open items are newest first until reordered with a long press; the sort key is `order ?? createdAt`, so a new item still lands on top.
+- Swipe left deletes (undo snackbar), swipe right opens the category picker and moves the task to today. Open items go one under another in the order they were written, a new one at the end right above the composer (the screen scrolls to it); a long press reorders them. The sort key is `order ?? createdAt`, so a new item still lands last after a reorder.
 - Collapsed «Зроблено · N» at the bottom (last 30 days).
 
 ## Goals screen
