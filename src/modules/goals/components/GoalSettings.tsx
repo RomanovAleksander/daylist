@@ -5,7 +5,7 @@ import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 
 import type { Goal, GoalKind, GoalMeasure } from '@/db';
 
-import { BlurTextField } from './BlurTextField';
+import { AutosaveTextField } from './AutosaveTextField';
 import { updateGoal } from '../api/goals.api';
 
 interface Props {
@@ -43,8 +43,7 @@ export const GoalSettings: FC<Props> = ({ goal }) => {
 
       {goal.kind === 'dated' && (
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, mt: 2 }}>
-          <BlurTextField
-            key={`start-${goal.startDate}`}
+          <AutosaveTextField
             type="date"
             label={t('goals.card.start')}
             value={goal.startDate}
@@ -53,8 +52,7 @@ export const GoalSettings: FC<Props> = ({ goal }) => {
             size="small"
             slotProps={{ inputLabel: { shrink: true }, htmlInput: { max: goal.deadline } }}
           />
-          <BlurTextField
-            key={`deadline-${goal.deadline}`}
+          <AutosaveTextField
             type="date"
             label={t('goals.card.deadline')}
             value={goal.deadline ?? ''}
