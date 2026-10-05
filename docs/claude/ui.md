@@ -23,6 +23,10 @@ Two layouts, chosen per device in Settings → «Вигляд «Сьогодні
 
 Every list reorders the same way via `ui/SortableList` + `SortableItem` (or `useSortableRow` when only a header drags or a row edits inline): a long press (300 ms) on touch, a 6px drag with the mouse. A tap and a horizontal swipe keep their meaning; the click right after a drop is swallowed. No drag handles.
 
+## Text fields
+
+A field that writes to Dexie saves while typing (after a short pause), on blur, on unmount and when the app is hidden — `AutosaveTextField`. Never rely on blur alone (the Android back button and closing the PWA skip it) and never re-key a field by its stored value (it remounts mid-typing and drops focus).
+
 ## Back button
 
 The Android back button closes the topmost overlay instead of leaving the app. Every overlay — `BottomSheet`, menu, dialog, `Select`, an in-sheet sub-step such as the category list — calls `useBackToClose(open, onClose)`, which keeps one history entry per open overlay. An overlay that navigates to another screen does it through `closeOverlaysThen(() => navigate(…))`, so back from the new screen never lands under a closed sheet.

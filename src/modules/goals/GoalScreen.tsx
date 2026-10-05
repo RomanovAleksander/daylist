@@ -14,7 +14,7 @@ import { SettingsSection } from '@/ui/SettingsSection';
 
 import { updateGoal } from './api/goals.api';
 import { AmountSheet } from './components/AmountSheet';
-import { BlurTextField } from './components/BlurTextField';
+import { AutosaveTextField } from './components/AutosaveTextField';
 import { GoalOptionsSheet } from './components/GoalOptionsSheet';
 import { GoalPrimary } from './components/GoalPrimary';
 import { StepsList } from './components/StepsList';
@@ -90,8 +90,7 @@ export const GoalScreen: FC = () => {
       />
       {goal.measure === 'steps' && <StepsList goalId={goal.id} steps={steps} />}
       <SettingsSection title={t('goals.card.description')}>
-        <BlurTextField
-          key={`description-${goal.description}`}
+        <AutosaveTextField
           multiline
           minRows={2}
           fullWidth

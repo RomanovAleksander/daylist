@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 
 import type { Goal } from '@/db';
 
-import { BlurTextField } from './BlurTextField';
+import { AutosaveTextField } from './AutosaveTextField';
 import { updateGoal } from '../api/goals.api';
 import { parseAmount } from '../utils/progress';
 
@@ -18,24 +18,21 @@ export const GoalNumberFields: FC<Props> = ({ goal }) => {
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 0.8fr', gap: 1, mt: 2 }}>
-      <BlurTextField
-        key={`current-${goal.current}`}
+      <AutosaveTextField
         label={t('goals.card.current')}
         value={goal.current?.toString() ?? ''}
         onCommit={(value) => void updateGoal(goal.id, { current: parseAmount(value) })}
         size="small"
         slotProps={{ htmlInput: { inputMode: 'decimal' } }}
       />
-      <BlurTextField
-        key={`target-${goal.target}`}
+      <AutosaveTextField
         label={t('goals.card.target')}
         value={goal.target?.toString() ?? ''}
         onCommit={(value) => void updateGoal(goal.id, { target: parseAmount(value) })}
         size="small"
         slotProps={{ htmlInput: { inputMode: 'decimal' } }}
       />
-      <BlurTextField
-        key={`unit-${goal.unit}`}
+      <AutosaveTextField
         label={t('goals.card.unit')}
         placeholder={t('goals.card.unitHint')}
         value={goal.unit ?? ''}
