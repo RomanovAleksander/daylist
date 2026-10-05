@@ -23,7 +23,8 @@ interface Props {
 
 /**
  * Центр экрана цели. С дедлайном главное — время: дни крупно, шкала и прогресс с риской темпа.
- * Без дедлайна (глобальная, мечта, уже достигнутая) — кольцо и одна строка контекста.
+ * Без дедлайна — кольцо, если есть что мерить или цель достигнута, и одна строка контекста;
+ * у мечты кольцо пустое, поэтому его нет, и описание поднимается выше.
  */
 export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewDate }) => {
   const { t } = useTranslation();
@@ -61,7 +62,9 @@ export const GoalPrimary: FC<Props> = ({ goal, steps, today, onAddAmount, onNewD
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, mt: 1 }}>
-      <GoalRing goal={goal} steps={steps} today={today} size={160} detailed />
+      {(measured || goal.achievedAt) && (
+        <GoalRing goal={goal} steps={steps} today={today} size={160} detailed />
+      )}
       <Typography sx={{ color: 'text.secondary', fontSize: 14, textAlign: 'center' }}>
         {context()}
       </Typography>

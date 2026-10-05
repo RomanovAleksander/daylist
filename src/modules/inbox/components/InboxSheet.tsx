@@ -59,7 +59,7 @@ export const InboxSheet: FC<Props> = ({ item, categories, onClose, onDelete, onT
       <InputBase
         fullWidth
         multiline
-        minRows={2}
+        minRows={4}
         value={note}
         placeholder={t('inbox.notePlaceholder')}
         inputProps={{ 'aria-label': t('inbox.note') }}

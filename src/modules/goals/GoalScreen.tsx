@@ -92,14 +92,20 @@ export const GoalScreen: FC = () => {
       <SettingsSection title={t('goals.card.description')}>
         <AutosaveTextField
           multiline
-          minRows={2}
+          minRows={5}
           fullWidth
           placeholder={t('goals.card.descriptionHint')}
           value={goal.description}
           onCommit={(description) => void updateGoal(goal.id, { description: description.trim() })}
           slotProps={{ htmlInput: { 'aria-label': t('goals.card.description') } }}
           sx={{
-            '& .MuiOutlinedInput-root': { bgcolor: 'background.paper', borderRadius: 5 },
+            '& .MuiOutlinedInput-root': {
+              bgcolor: 'background.paper',
+              borderRadius: 5,
+              p: 2,
+              fontSize: 16,
+              lineHeight: 1.5,
+            },
             '& .MuiOutlinedInput-root:not(.Mui-focused) fieldset': { borderColor: 'transparent' },
           }}
         />
